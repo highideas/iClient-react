@@ -1,0 +1,12 @@
+version: '2'
+services:
+    iClientReact:
+        image: node:6.7.0
+        container_name: iClientReact
+        restart: always
+        ports:
+         - "8081:80"
+        volumes:
+         - ./:/client
+        tty: true
+
