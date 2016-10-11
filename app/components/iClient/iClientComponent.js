@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, IndexRoute, IndexLink, Link } from 'react-router'
 
-import LoginComponent from './../Login/LoginComponent';
+import LoginComponent from 'components/Login/LoginComponent';
 
 class iClientComponent extends React.Component{
     constructor(props) {

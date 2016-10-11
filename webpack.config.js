@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
     entry: "./app/App.js",
     output: {
@@ -14,6 +16,12 @@ module.exports = {
                     presets: ['react', 'es2015']
                 }
             }
+        ]
+    },
+    resolve: {
+        extensions: ['', '.js', '.jsx'],
+        root: [
+            path.resolve('./app')
         ]
     }
 }

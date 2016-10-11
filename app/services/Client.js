@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const host = 'http://localhost:3000';
-const iClientClient = {
+const Client = {
     getClients() {
         let config = {
             headers: {
@@ -12,5 +12,5 @@ const iClientClient = {
     }
 };
 
-export default iClientClient;
+export default Client;
 
