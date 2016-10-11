@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Client from './../../services/Client';
+import Client from 'services/Client';
 
 class ClientComponent extends React.Component{
     constructor(props) {

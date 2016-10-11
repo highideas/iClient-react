@@ -1,6 +1,6 @@
 import React from 'react';
 
-import User from './../../services/User';
+import User from 'services/User';
 
 class LoginComponent extends React.Component{
     constructor(props, context) {
