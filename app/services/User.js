@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const host = 'http://localhost:3000';
-const iClientUser = {
+const User = {
     login(username, password) {
         let auth = {
             username: username,
@@ -11,4 +11,4 @@ const iClientUser = {
     }
 };
 
-export default iClientUser;
+export default User;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import iClientClient from './../../services/iClientClient';
+import Client from './../../services/Client';
 
 class ClientComponent extends React.Component{
     constructor(props) {
@@ -12,7 +12,7 @@ class ClientComponent extends React.Component{
     }
 
     getClients() {
-        iClientClient.getClients().then((response) => {
+        Client.getClients().then((response) => {
             this.setState({clients: response.data.clients});
         });
     }

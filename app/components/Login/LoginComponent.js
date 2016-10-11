@@ -1,6 +1,6 @@
 import React from 'react';
 
-import iClientUser from './../../services/iClientUser';
+import User from './../../services/User';
 
 class LoginComponent extends React.Component{
     constructor(props, context) {
@@ -11,7 +11,7 @@ class LoginComponent extends React.Component{
     handleSubmit(e) {
         e.preventDefault();
 
-        iClientUser.login(
+        User.login(
             this.refs.username.value,
             this.refs.password.value
         ).then((response) => {
