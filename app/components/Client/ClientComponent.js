@@ -13,7 +13,6 @@ class ClientComponent extends React.Component{
 
     getClients() {
         iClientClient.getClients().then((response) => {
-            console.log(response);
             this.setState({clients: response.data.clients});
         });
     }
@@ -21,7 +20,7 @@ class ClientComponent extends React.Component{
     render() {
         const clientList = this.state.clients.map((client, key) => {
             return (
-                <tr>
+                <tr key={key} >
                     <td>{ client.name }</td>
                     <td>{ client.address }</td>
                     <td>{ client.city }</td>
