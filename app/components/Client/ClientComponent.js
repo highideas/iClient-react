@@ -1,14 +1,38 @@
 import React from 'react';
 
+import iClientClient from './../../services/iClientClient';
+
 class ClientComponent extends React.Component{
     constructor(props) {
         super(props);
+        this.state = {
+            clients : []
+        };
+        this.getClients();
+    }
+
+    getClients() {
+        iClientClient.getClients().then((response) => {
+            console.log(response);
+            this.setState({clients: response.data.clients});
+        });
     }
 
     render() {
+        const clientList = this.state.clients.map((client, key) => {
+            return (
+                <tr>
+                    <td>{ client.name }</td>
+                    <td>{ client.address }</td>
+                    <td>{ client.city }</td>
+                    <td className="is-icon"> <a href="#"> <i className="fa fa-calendar"></i> </a> </td>
+                    <td className="is-icon"> <a href="#"> <i className="fa fa-search"></i>   </a> </td>
+                </tr>
+            );
+        });
+
         return (
             <div className="container hello">
-                <h1>{{ msg }}</h1>
                 <table className="table">
                     <thead>
                         <tr>
@@ -20,15 +44,7 @@ class ClientComponent extends React.Component{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="client in clients">
-                            <td>{{ client.name }}</td>
-                            <td>{{ client.address }}</td>
-                            <td>{{ client.city }}</td>
-                            <td className="is-icon"> <a href="#"> <i className="fa fa-calendar"></i> </a>
-                            </td>
-                            <td className="is-icon"> <a href="#"> <i className="fa fa-search"></i>   </a>
-                            </td>
-                        </tr>
+                        { clientList }
                     </tbody>
                 </table>
             </div>
