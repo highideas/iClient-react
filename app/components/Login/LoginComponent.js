@@ -1,8 +1,25 @@
 import React from 'react';
 
-class HomeComponent extends React.Component{
-    constructor(props) {
-        super(props);
+import iClientUser from './../../services/iClientUser';
+
+class LoginComponent extends React.Component{
+    constructor(props, context) {
+        super(props, context);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+
+        iClientUser.login(
+            this.refs.username.value,
+            this.refs.password.value
+        ).then((response) => {
+            localStorage.token = response.data.token;
+            window.location.href = "/";
+        });
+        console.log(this.refs.username.value);
+        console.log(this.refs.password.value);
     }
 
     render() {
@@ -17,18 +34,27 @@ class HomeComponent extends React.Component{
                                 </h1>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="box">
-                                        <label className="label">Email</label>
+                                        <label className="label">Username</label>
                                         <p className="control">
-                                            <input className="input" type="text" placeholder="jsmith@example.org" />
+                                            <input
+                                                ref='username'
+                                                className="input"
+                                                type="text"
+                                                placeholder="Ex: jsmith" 
+                                            />
                                         </p>
                                         <label className="label">Password</label>
                                         <p className="control">
-                                            <input className="input" type="password" placeholder="●●●●●●●" />
+                                            <input
+                                                ref='password'
+                                                className="input"
+                                                type="password"
+                                                placeholder="●●●●●●●"
+                                            />
                                         </p>
                                         <hr />
                                         <p className="control">
                                             <button className="button is-primary">Login</button>
-                                            <button className="button is-default">Cancel</button>
                                         </p>
                                         <p className="has-text-centered">
                                             <a href="register.html">Register an Account</a>
@@ -46,4 +72,4 @@ class HomeComponent extends React.Component{
     }
 }
 
-export default HomeComponent;
+export default LoginComponent;
