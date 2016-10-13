@@ -1,4 +1,5 @@
 import React from 'react';
+import { Router } from 'react-router'
 
 import User from 'services/User';
 
@@ -17,7 +18,7 @@ class LoginComponent extends React.Component{
         ).then((response) => {
             if (response.data.success == 200) {
                 localStorage.token = response.data.token;
-                window.location.href = "/";
+                this.context.router.push("/");
             }
         });
     }
@@ -69,5 +70,9 @@ class LoginComponent extends React.Component{
         );
     }
 }
+
+LoginComponent.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default LoginComponent;
