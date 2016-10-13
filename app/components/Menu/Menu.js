@@ -15,32 +15,27 @@ class Menu extends React.Component{
 
     handleView() {
         return (
-            <div>
-                <nav className="nav has-shadow" id="top">
-                    <div className="container">
-                        <div className="nav-left">
-                            <a className="nav-item" href="../index.html">IClient</a>
-                        </div>
-                        <span className="nav-toggle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </span>
-                        <div className="nav-right nav-menu">
-                            <Link to="/" className="nav-item is-tab is-active">Home</Link>
-                            <Link to="/client" className="nav-item is-tab">Client</Link>
-                            <Link to="/area" className="nav-item is-tab">Area</Link>
-                            <span className="nav-item">
-                                <a className="button" onClick={this.handleLogout}>Logout</a>
-                                <a className="button is-info">Sign up </a>
-                            </span>
-                        </div>
+            <nav className="nav has-shadow" id="top">
+                <div className="container">
+                    <div className="nav-left">
+                        <a className="nav-item" href="../index.html">IClient</a>
                     </div>
-                </nav>
-                <div className="content">
-                    {this.props.children}
+                    <span className="nav-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <div className="nav-right nav-menu">
+                        <Link to="/" className="nav-item is-tab is-active">Home</Link>
+                        <Link to="/client" className="nav-item is-tab">Client</Link>
+                        <Link to="/area" className="nav-item is-tab">Area</Link>
+                        <span className="nav-item">
+                            <a className="button" onClick={this.handleLogout}>Logout</a>
+                            <a className="button is-info">Sign up </a>
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </nav>
         );
     }
 
