@@ -7,6 +7,9 @@ class LoginComponent extends React.Component{
     constructor(props, context) {
         super(props, context);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            error: ''
+        };
     }
 
     handleSubmit(e) {
@@ -20,10 +23,22 @@ class LoginComponent extends React.Component{
                 localStorage.token = response.data.token;
                 this.context.router.push("/");
             }
+        }).catch((error) => {
+            this.setState({error: 'Authentication failed'});
+            if (error.response.data) {
+                this.setState({error: error.response.data.error});
+            }
         });
     }
 
     render() {
+        let error = <span></span>;
+        if (this.state.error) {
+            error = <div className="notification is-danger">
+                        <button className="delete"></button>
+                        {this.state.error}
+                    </div>;
+        }
         return (
             <section className="hero is-fullheight is-primary">
                 <div className="hero-body">
@@ -35,6 +50,7 @@ class LoginComponent extends React.Component{
                                 </h1>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="box">
+                                        {error}
                                         <label className="label">Username</label>
                                         <p className="control">
                                             <input
