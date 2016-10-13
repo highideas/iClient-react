@@ -1,4 +1,5 @@
 import React from 'react';
+import { Router } from 'react-router'
 
 import User from 'services/User';
 
@@ -6,6 +7,9 @@ class LoginComponent extends React.Component{
     constructor(props, context) {
         super(props, context);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            error: ''
+        };
     }
 
     handleSubmit(e) {
@@ -17,57 +21,76 @@ class LoginComponent extends React.Component{
         ).then((response) => {
             if (response.data.success == 200) {
                 localStorage.token = response.data.token;
-                window.location.href = "/";
+                this.context.router.push("/");
+            }
+        }).catch((error) => {
+            this.setState({error: 'Authentication failed'});
+            if (error.response.data) {
+                this.setState({error: error.response.data.error});
             }
         });
     }
 
     render() {
+        let error = <span></span>;
+        if (this.state.error) {
+            error = <div className="notification is-danger">
+                        <button className="delete"></button>
+                        {this.state.error}
+                    </div>;
+        }
         return (
-            <div className="hero-body">
-                <div className="container">
-                    <div className="columns is-vcentered">
-                        <div className="column is-4 is-offset-4">
-                            <h1 className="title has-text-centered">
-                                IClient
-                            </h1>
-                            <form onSubmit={this.handleSubmit}>
-                                <div className="box">
-                                    <label className="label">Username</label>
-                                    <p className="control">
-                                        <input
-                                            ref='username'
-                                            className="input"
-                                            type="text"
-                                            placeholder="Ex: jsmith" 
-                                        />
-                                    </p>
-                                    <label className="label">Password</label>
-                                    <p className="control">
-                                        <input
-                                            ref='password'
-                                            className="input"
-                                            type="password"
-                                            placeholder="●●●●●●●"
-                                        />
-                                    </p>
-                                    <hr />
-                                    <p className="control">
-                                        <button className="button is-primary">Login</button>
-                                    </p>
-                                    <p className="has-text-centered">
-                                        <a href="register.html">Register an Account</a>
-                                        |
-                                        <a href="#">Forgot password</a>
-                                    </p>
-                                </div>
-                            </form>
+            <section className="hero is-fullheight is-primary">
+                <div className="hero-body">
+                    <div className="container">
+                        <div className="columns is-vcentered">
+                            <div className="column is-4 is-offset-4">
+                                <h1 className="title has-text-centered">
+                                    IClient
+                                </h1>
+                                <form onSubmit={this.handleSubmit}>
+                                    <div className="box">
+                                        {error}
+                                        <label className="label">Username</label>
+                                        <p className="control">
+                                            <input
+                                                ref='username'
+                                                className="input"
+                                                type="text"
+                                                placeholder="Ex: jsmith" 
+                                            />
+                                        </p>
+                                        <label className="label">Password</label>
+                                        <p className="control">
+                                            <input
+                                                ref='password'
+                                                className="input"
+                                                type="password"
+                                                placeholder="●●●●●●●"
+                                            />
+                                        </p>
+                                        <hr />
+                                        <p className="control">
+                                            <button className="button is-primary">Login</button>
+                                        </p>
+                                        <p className="has-text-centered">
+                                            <a href="register.html">Register an Account</a>
+                                            |
+                                            <a href="#">Forgot password</a>
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         );
     }
 }
+
+LoginComponent.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default LoginComponent;
