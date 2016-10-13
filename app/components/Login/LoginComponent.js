@@ -7,6 +7,7 @@ class LoginComponent extends React.Component{
     constructor(props, context) {
         super(props, context);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDeleteMessage = this.handleDeleteMessage.bind(this);
         this.state = {
             error: ''
         };
@@ -31,11 +32,15 @@ class LoginComponent extends React.Component{
         });
     }
 
+    handleDeleteMessage() {
+        this.setState({error: ''});
+    }
+
     render() {
         let error = <span></span>;
         if (this.state.error) {
             error = <div className="notification is-danger">
-                        <button className="delete"></button>
+                        <button className="delete" onClick={this.handleDeleteMessage}></button>
                         {this.state.error}
                     </div>;
         }
@@ -72,11 +77,6 @@ class LoginComponent extends React.Component{
                                         <hr />
                                         <p className="control">
                                             <button className="button is-primary">Login</button>
-                                        </p>
-                                        <p className="has-text-centered">
-                                            <a href="register.html">Register an Account</a>
-                                            |
-                                            <a href="#">Forgot password</a>
                                         </p>
                                     </div>
                                 </form>
