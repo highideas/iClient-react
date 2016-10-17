@@ -2,11 +2,13 @@ import React from 'react';
 import { Router } from 'react-router'
 
 import User from 'services/User';
+import ErrorComponent from 'components/Error/Error';
 
 class LoginComponent extends React.Component{
     constructor(props, context) {
         super(props, context);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDeleteMessage = this.handleDeleteMessage.bind(this);
         this.state = {
             error: ''
         };
@@ -31,14 +33,11 @@ class LoginComponent extends React.Component{
         });
     }
 
+    handleDeleteMessage() {
+        this.setState({error: ''});
+    }
+
     render() {
-        let error = <span></span>;
-        if (this.state.error) {
-            error = <div className="notification is-danger">
-                        <button className="delete"></button>
-                        {this.state.error}
-                    </div>;
-        }
         return (
             <section className="hero is-fullheight is-primary">
                 <div className="hero-body">
@@ -50,7 +49,7 @@ class LoginComponent extends React.Component{
                                 </h1>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="box">
-                                        {error}
+                                         <ErrorComponent error={this.state.error} />
                                         <label className="label">Username</label>
                                         <p className="control">
                                             <input
@@ -72,11 +71,6 @@ class LoginComponent extends React.Component{
                                         <hr />
                                         <p className="control">
                                             <button className="button is-primary">Login</button>
-                                        </p>
-                                        <p className="has-text-centered">
-                                            <a href="register.html">Register an Account</a>
-                                            |
-                                            <a href="#">Forgot password</a>
                                         </p>
                                     </div>
                                 </form>
