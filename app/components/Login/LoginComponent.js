@@ -2,6 +2,7 @@ import React from 'react';
 import { Router } from 'react-router'
 
 import User from 'services/User';
+import ErrorComponent from 'components/Error/Error';
 
 class LoginComponent extends React.Component{
     constructor(props, context) {
@@ -37,13 +38,6 @@ class LoginComponent extends React.Component{
     }
 
     render() {
-        let error = <span></span>;
-        if (this.state.error) {
-            error = <div className="notification is-danger">
-                        <button className="delete" onClick={this.handleDeleteMessage}></button>
-                        {this.state.error}
-                    </div>;
-        }
         return (
             <section className="hero is-fullheight is-primary">
                 <div className="hero-body">
@@ -55,7 +49,7 @@ class LoginComponent extends React.Component{
                                 </h1>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="box">
-                                        {error}
+                                         <ErrorComponent error={this.state.error} />
                                         <label className="label">Username</label>
                                         <p className="control">
                                             <input
