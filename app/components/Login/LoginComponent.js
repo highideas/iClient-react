@@ -4,7 +4,8 @@ import { Router } from 'react-router'
 import User from 'services/User';
 import ErrorComponent from 'components/Error/Error';
 
-class LoginComponent extends React.Component{
+class LoginComponent extends React.Component
+{
     constructor(props, context) {
         super(props, context);
         this.handleSubmit = this.handleSubmit.bind(this);

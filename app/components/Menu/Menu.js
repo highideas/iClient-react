@@ -31,7 +31,6 @@ class Menu extends React.Component{
                         <Link to="/area" className="nav-item is-tab">Area</Link>
                         <span className="nav-item">
                             <a className="button" onClick={this.handleLogout}>Logout</a>
-                            <a className="button is-info">Sign up </a>
                         </span>
                     </div>
                 </div>
