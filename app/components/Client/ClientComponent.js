@@ -1,8 +1,9 @@
 import React from 'react';
 
-import iClientClient from './../../services/iClientClient';
+import Client from 'services/Client';
 
-class ClientComponent extends React.Component{
+class ClientComponent extends React.Component
+{
     constructor(props) {
         super(props);
         this.state = {
@@ -12,8 +13,7 @@ class ClientComponent extends React.Component{
     }
 
     getClients() {
-        iClientClient.getClients().then((response) => {
-            console.log(response);
+        Client.getClients().then((response) => {
             this.setState({clients: response.data.clients});
         });
     }
@@ -21,7 +21,7 @@ class ClientComponent extends React.Component{
     render() {
         const clientList = this.state.clients.map((client, key) => {
             return (
-                <tr>
+                <tr key={key} >
                     <td>{ client.name }</td>
                     <td>{ client.address }</td>
                     <td>{ client.city }</td>
