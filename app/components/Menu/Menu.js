@@ -19,11 +19,8 @@ class Menu extends React.Component{
     }
 
     toggleNav() {
-        if (this.state.toggleNav) {
-            this.setState({toggleNav: ''});
-        } else {
-            this.setState({toggleNav: 'is-active'});
-        }
+        let isActive = this.state.toggleNav ? '' : 'is-active';
+        this.setState({toggleNav: isActive});
     }
 
     handleLink(e) {
