@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import 'bulma/css/bulma.css'
+import 'font-awesome-webpack'
 
 import iClientComponent from 'components/iClient/iClientComponent';
 import HomeComponent from 'components/Home/HomeComponent';
