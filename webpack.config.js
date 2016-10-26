@@ -1,7 +1,7 @@
 const path = require('path');
 
 var webpack = require('webpack');
-console.log(process.env.npm_lifecycle_event);
+
 module.exports = {
     entry: "./app/App.js",
     output: {
