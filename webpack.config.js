@@ -1,11 +1,13 @@
 const path = require('path');
 
+var webpack = require('webpack');
+console.log(process.env.npm_lifecycle_event);
 module.exports = {
     entry: "./app/App.js",
     output: {
         path: 'public/dist/',
         publicPath: '/dist/',
-        filename: "bundle.js",
+        filename: "bundle.min.js",
     },
     module: {
         loaders: [
@@ -25,6 +27,11 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false }
+        })
+    ],
     resolve: {
         extensions: ['', '.js', '.jsx'],
         root: [
