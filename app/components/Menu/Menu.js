@@ -8,8 +8,14 @@ class Menu extends React.Component{
         this.handleView = this.handleView.bind(this);
         this.toggleNav = this.toggleNav.bind(this);
         this.handleLink = this.handleLink.bind(this);
+        this.createLink = this.createLink.bind(this);
         this.state = {
-            toggleNav: ''
+            toggleNav: '',
+            links: [
+                [ '/', 'Home'],
+                ['/client', 'Client'],
+                ['/area', 'Area']
+            ]
         };
     }
 
@@ -27,6 +33,18 @@ class Menu extends React.Component{
         this.setState({toggleNav: ''});
     }
 
+    createLink() {
+        return this.state.links.map((link, index) => (
+            <Link to={link[0]}
+                key={index}
+                className="nav-item is-tab"
+                onlyActiveOnIndex={true}
+                activeClassName="is-active"
+                onClick={this.handleLink}>{link[1]}
+            </Link>
+        ));
+    }
+
     handleView() {
         return (
             <nav className="nav has-shadow" id="top">
@@ -40,22 +58,7 @@ class Menu extends React.Component{
                         <span></span>
                     </span>
                     <div className={ `nav-right nav-menu ${this.state.toggleNav}` }>
-                        <Link to="/" 
-                            className="nav-item is-tab"
-                            onlyActiveOnIndex={true}
-                            activeClassName="is-active"
-                            onClick={this.handleLink}>Home
-                        </Link>
-                        <Link to="/client"
-                            className="nav-item is-tab"
-                            activeClassName="is-active"
-                            onClick={this.handleLink}>Client
-                        </Link>
-                        <Link to="/area"
-                            className="nav-item is-tab"
-                            activeClassName="is-active"
-                            onClick={this.handleLink}>Area
-                        </Link>
+                        {this.createLink()}
                         <span className="nav-item">
                             <a className="button" onClick={this.handleLogout}>Logout</a>
                         </span>
