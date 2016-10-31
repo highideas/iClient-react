@@ -1,25 +1,15 @@
 import React from 'react';
-import { Router, Link } from 'react-router'
+import { Link } from 'react-router'
 
 class LinksApp extends React.Component
 {
     constructor(props, context) {
         super(props, context);
         this.generate = this.generate.bind(this);
-        this.handleLogout = this.handleLogout.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.state = {
-            links: [
-                [ '/', 'Home'],
-                ['/client', 'Client'],
-                ['/area', 'Area']
-            ]
+            links: this.props.links || []
         };
-    }
-
-    handleLogout() {
-        delete localStorage.token;
-        this.context.router.push("/");
     }
 
     handleClick(e) {
@@ -46,16 +36,16 @@ class LinksApp extends React.Component
         return (
             <span className="nav-right nav-menu is-active">
                 {this.generate()}
-                <span className="nav-item">
-                    <a className="button" onClick={this.handleLogout}>Logout</a>
-                </span>
             </span>
         );
     }
 }
 
+LinksApp.propTypes = {
+    links: React.PropTypes.array.isRequired
+};
+
 LinksApp.contextTypes = {
-    router: React.PropTypes.object.isRequired,
     onClick: React.PropTypes.func
 };
 
