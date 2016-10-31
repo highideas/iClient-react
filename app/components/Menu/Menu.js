@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Nav from 'components/Nav/Nav'
+import LinksApp from 'components/LinksApp/LinksApp'
+
 
 class Menu extends React.Component{
     constructor(props, context) {
@@ -10,7 +12,9 @@ class Menu extends React.Component{
 
     handleView() {
         return (
-            <Nav />
+            <Nav>
+                <LinksApp />
+            </Nav>
         );
     }
 

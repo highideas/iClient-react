@@ -1,25 +1,29 @@
 import React from 'react';
 
-import LinksApp from 'components/LinksApp/LinksApp'
-
 class Nav extends React.Component
 {
     constructor(props, context) {
         super(props, context);
-        this.toggleNav = this.toggleNav.bind(this);
+        this.toggleNavStatus = this.toggleNavStatus.bind(this);
         this.hide = this.hide.bind(this);
         this.state = {
-            toggleNav: ''
+            toggleNavStatus: ''
         };
     }
 
-    hide(e) {
-        this.setState({toggleNav: ''});
+    getChildContext() {
+        return {
+            onClick: this.toggleNavStatus
+        }
     }
 
-    toggleNav() {
-        let isActive = this.state.toggleNav ? '' : 'is-active';
-        this.setState({toggleNav: isActive});
+    hide(e) {
+        this.setState({toggleNavStatus: ''});
+    }
+
+    toggleNavStatus() {
+        let isActive = this.state.toggleNavStatus ? '' : 'is-active';
+        this.setState({toggleNavStatus: isActive});
     }
 
     render() {
@@ -29,13 +33,12 @@ class Nav extends React.Component
                     <div className="nav-left">
                         <a className="nav-item" href="../index.html">IClient</a>
                     </div>
-                    <span className={ `nav-toggle ${this.state.toggleNav}` } onClick={this.toggleNav}>
+                    <span className={ `nav-toggle ${this.state.toggleNavStatus}` } onClick={this.toggleNavStatus}>
                         <span></span>
                         <span></span>
                         <span></span>
                     </span>
-                    <div className={ `nav-right nav-menu ${this.state.toggleNav}` }>
-                        <LinksApp hide={this.hide} />
+                    <div className={ `nav-right nav-menu ${this.state.toggleNavStatus}` }>
                         {this.props.children}
                     </div>
                 </div>
@@ -43,6 +46,10 @@ class Nav extends React.Component
         );
     }
 }
+
+Nav.childContextTypes = {
+    onClick: React.PropTypes.func
+};
 
 export default Nav;
 

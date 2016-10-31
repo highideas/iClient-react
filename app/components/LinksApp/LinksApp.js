@@ -7,6 +7,7 @@ class LinksApp extends React.Component
         super(props, context);
         this.generate = this.generate.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.state = {
             links: [
                 [ '/', 'Home'],
@@ -17,9 +18,14 @@ class LinksApp extends React.Component
     }
 
     handleLogout() {
-        console.log('Marco', this.context, this.context.router);
         delete localStorage.token;
         this.context.router.push("/");
+    }
+
+    handleClick(e) {
+        if (this.context.onClick) {
+            this.context.onClick();
+        }
     }
 
     generate() {
@@ -29,7 +35,9 @@ class LinksApp extends React.Component
                 className="nav-item is-tab"
                 onlyActiveOnIndex={true}
                 activeClassName="is-active"
-                onClick={this.props.hide}>{link[1]}
+                onClick={this.handleClick}
+            >
+                {link[1]}
             </Link>
         ));
     }
@@ -46,12 +54,9 @@ class LinksApp extends React.Component
     }
 }
 
-LinksApp.propTypes = {
-    hide: React.PropTypes.func.isRequired
-};
-
 LinksApp.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    onClick: React.PropTypes.func
 };
 
 export default LinksApp;
