@@ -15,13 +15,17 @@ class Area extends React.Component
             error : ''
         };
         this.generate = this.generate.bind(this);
+        this.generateError = this.generateError.bind(this);
+        this.getVisitGroupByArea = this.getVisitGroupByArea.bind(this);
         this.getVisitGroupByArea();
     }
 
     getVisitGroupByArea() {
         VisitService.getGroupByArea().then((response) => {
-            this.setState({areas: response.data.visits});
             this.setState({error: ''});
+            this.setState({
+                areas: this.generate(response.data.visits)
+            });
         }).catch((error) => {
             if (error.response) {
                 this.setState({error: error.response.data.error});
@@ -29,8 +33,14 @@ class Area extends React.Component
         });
     }
 
-    generate() {
-        return this.state.areas.map((area, key) => {
+    generateError(error) {
+        return (
+            <ErrorComponent error={this.state.error} />
+        );
+    }
+
+    generate(areas) {
+        return areas.map((area, key) => {
             return (
                 <div className="area" key={ key }>
                     <h3 className="title is-3">{area._id}</h3>
@@ -42,13 +52,12 @@ class Area extends React.Component
 
     render() {
         if (this.state.error) {
-            return (
-                <ErrorComponent error={this.state.error} />
-            );
+            let error = this.generateError(this.state.error);
+            return error;
         }
         return (
             <div className="container hello">
-                { this.generate() }
+                { this.state.areas }
             </div>
         );
     }
