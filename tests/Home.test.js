@@ -3,10 +3,6 @@ describe('Test Home', () => {
     const Enzyme = require('enzyme');
     const shallow = Enzyme.shallow;
 
-    beforeEach((done) => {
-        done();
-    });
-
     test('Home should show welcome message', () => {
 
         let Home = require('components/Home/Home').default;
