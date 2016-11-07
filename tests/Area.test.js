@@ -26,11 +26,8 @@ describe('Test Area', () => {
 
         let error = {response:{data:{error:"Not Found"}}};
 
-        let Visit = require('services/Visit').default;
-        Visit.getGroupByArea = jest.genMockFunction().mockImplementation(() => {
-            return new Promise((resolve, reject) => {
-                throw error;
-            });
+        promise = new Promise((resolve, reject) => {
+            throw error;
         });
 
         let Area = require('components/Area/Area').default;
