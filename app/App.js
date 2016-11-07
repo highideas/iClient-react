@@ -5,7 +5,7 @@ import 'bulma/css/bulma.css'
 import 'font-awesome-webpack'
 
 import iClientComponent from 'components/iClient/iClientComponent';
-import HomeComponent from 'components/Home/HomeComponent';
+import HomeComponent from 'components/Home/Home';
 import ClientComponent from 'components/Client/ClientComponent';
 import AreaComponent from 'components/Area/Area';
 
