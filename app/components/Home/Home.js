@@ -1,12 +1,8 @@
 import React from 'react';
-import { Router } from 'react-router'
 
 class Home extends React.Component{
 
     render() {
-        if (!localStorage.token) {
-            this.context.router.push("/");
-        }
         return (
             <div className="hero-body">
                 <div className="container">
@@ -18,10 +14,6 @@ class Home extends React.Component{
         );
     }
 }
-
-HomeComponent.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Home;
 
