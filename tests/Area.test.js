@@ -6,7 +6,6 @@ jest.dontMock('axios');
 jest.dontMock('../tests/__mocks__/AreasResponseMock');
 jest.dontMock('enzyme');
 
-var promise = {};
 
 describe('Test Area', () => {
     const React = require('react');
@@ -16,44 +15,63 @@ describe('Test Area', () => {
 
 
     beforeEach((done) => {
-        Visit.getGroupByArea = jest.genMockFunction().mockImplementation(() => {
-            return promise;
-        });
         done();
     });
 
     test('Area should show nothing if no data', () => {
 
         let error = {response:{data:{error:"Not Found"}}};
+        let promises = [];
+        let Area;
+        let component;
 
-        promise = new Promise((resolve, reject) => {
-            throw error;
-        });
-
-        let Area = require('components/Area/Area').default;
-
-        const component = shallow(
-            <Area />
-        );
-        component.setState({
-            error: error.response.data.error
-        });
-        expect(component.state('error')).toEqual('Not Found');
-
-        let errorComponent = shallow(
-            component.instance().generateError(error.response.data.error)
+        promises.push(
+            () => {
+                Visit.getGroupByArea = jest.genMockFunction().mockImplementation(() => {
+                    return new Promise((resolve, reject) => {
+                        throw error;
+                    });
+                })
+            }
         );
 
-        expect(errorComponent.find('div').text()).toEqual('Not Found');
+        promises.push(
+            () => {
+                Area = require('components/Area/Area').default;
+            }
+        );
+
+        promises.push(
+            () => {
+                component = shallow(
+                    <Area />
+                );
+            }
+        );
+//        component.setState({
+//            error: error.response.data.error
+//        });
+        Promise.all(promises).then(() => {
+            expect(component.state('error')).toEqual('Not Found');
+
+            let errorComponent = shallow(
+                component.instance().generateError(error.response.data.error)
+            );
+
+            expect(errorComponent.find('div').text()).toEqual('Not Found');
+        }).catch((error) => {
+            console.log(error);
+        });
     });
 
     test('Area should show mocked data', () => {
 
         let response = {data:require('AreasResponseMock').default};
-
-        promise = new Promise((resolve, reject) => {
-            resolve(response);
-        });
+        Visit.getGroupByArea = jest.genMockFunction().mockImplementation(() => {
+            return new Promise((resolve, reject) => {
+                resolve(response);
+            });
+        })
 
         let Area = require('components/Area/Area').default;
 
