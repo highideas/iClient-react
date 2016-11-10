@@ -13,7 +13,7 @@ describe('Test Area', () => {
     const shallow = Enzyme.shallow;
     let Visit = require('services/Visit').default;
 
-    it('Area should show nothing if no data', (done) => {
+    it('Area should show error message', (done) => {
 
         let error = {response:{data:{error:"Not Found"}}};
         let promises = [];
@@ -52,6 +52,45 @@ describe('Test Area', () => {
             );
 
             expect(errorComponent.find('div').text()).toEqual('Not Found');
+            done();
+        }).catch((error) => {
+            console.log(error);
+        });
+    });
+
+    it('Area should show nothing if no data', (done) => {
+
+        let error = {data:{error:"Not Found"}};
+        let promises = [];
+        let Area;
+        let component;
+
+        promises.push(
+            (() => {
+                Visit.getGroupByArea = jest.genMockFunction().mockImplementation(() => {
+                    return new Promise((resolve, reject) => {
+                        throw error;
+                    });
+                })
+            })()
+        );
+
+        promises.push(
+            (() => {
+                Area = require('components/Area/Area').default;
+            })()
+        );
+
+        promises.push(
+            (() => {
+                component = shallow(
+                    <Area />
+                );
+            })()
+        );
+
+        Promise.all(promises).then(() => {
+            expect(component.state('error')).toEqual('');
             done();
         }).catch((error) => {
             console.log(error);
