@@ -7,7 +7,7 @@ class Visit extends React.Component
         super(props, context);
         this.generate = this.generate.bind(this);
         this.state = {
-            visits: this.props.visits || []
+            visits: this.props.visits
         };
     }
 
