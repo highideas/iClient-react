@@ -9,7 +9,6 @@ class Login extends React.Component
     constructor(props, context) {
         super(props, context);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleDeleteMessage = this.handleDeleteMessage.bind(this);
         this.state = {
             error: ''
         };
@@ -32,10 +31,6 @@ class Login extends React.Component
                 this.setState({error: error.response.data.error});
             }
         });
-    }
-
-    handleDeleteMessage() {
-        this.setState({error: ''});
     }
 
     render() {
