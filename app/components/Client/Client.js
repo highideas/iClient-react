@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Client from 'services/Client';
+import ClientService from 'services/Client';
 
-class ClientComponent extends React.Component
+class Client extends React.Component
 {
     constructor(props) {
         super(props);
@@ -13,7 +13,7 @@ class ClientComponent extends React.Component
     }
 
     getClients() {
-        Client.getClients().then((response) => {
+        ClientService.getClients().then((response) => {
             this.setState({clients: response.data.clients});
         });
     }
@@ -52,5 +52,5 @@ class ClientComponent extends React.Component
     }
 }
 
-export default ClientComponent;
+export default Client;
 

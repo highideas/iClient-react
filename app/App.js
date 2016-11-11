@@ -6,7 +6,7 @@ import 'font-awesome-webpack'
 
 import iClientComponent from 'components/iClient/iClientComponent';
 import HomeComponent from 'components/Home/Home';
-import ClientComponent from 'components/Client/ClientComponent';
+import ClientComponent from 'components/Client/Client';
 import AreaComponent from 'components/Area/Area';
 
 ReactDOM.render(
