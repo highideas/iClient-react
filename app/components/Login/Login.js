@@ -4,7 +4,7 @@ import { Router } from 'react-router'
 import User from 'services/User';
 import ErrorComponent from 'components/Error/Error';
 
-class LoginComponent extends React.Component
+class Login extends React.Component
 {
     constructor(props, context) {
         super(props, context);
@@ -23,7 +23,7 @@ class LoginComponent extends React.Component
             this.refs.password.value
         ).then((response) => {
             if (response.data.success == 200) {
-                localStorage.token = response.data.token;
+                window.localStorage.setItem('token', response.data.token);
                 this.context.router.push("/");
             }
         }).catch((error) => {
@@ -84,8 +84,9 @@ class LoginComponent extends React.Component
     }
 }
 
-LoginComponent.contextTypes = {
+Login.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
 
-export default LoginComponent;
+export default Login;
+
