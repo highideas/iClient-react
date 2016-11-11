@@ -1,12 +1,12 @@
 import React from 'react';
-import { Router, Route, IndexRoute, IndexLink, Link } from 'react-router'
 
 import LoginComponent from 'components/Login/Login';
 import MenuComponent from 'components/Menu/Menu';
 
-class iClientComponent extends React.Component{
-    constructor(props) {
-        super(props);
+class IClient extends React.Component
+{
+    constructor(props, context) {
+        super(props, context);
         this.handleView = this.handleView.bind(this);
     }
 
@@ -20,10 +20,11 @@ class iClientComponent extends React.Component{
             </div>
         );
     }
+
     render() {
         let view = this.handleView();
 
-        if (!localStorage.token) {
+        if (!window.localStorage.getItem('token')) {
             view = <LoginComponent />;
         }
         return (
@@ -32,5 +33,5 @@ class iClientComponent extends React.Component{
     }
 }
 
-export default iClientComponent;
+export default IClient;
 
