@@ -15,7 +15,7 @@ describe('Test Login', () => {
     const Login = require('components/Login/Login').default;
     const context = {
         router: {
-            push: () => null
+            push: (arg) => arg
         }
     };
     let User = require('services/User').default;
@@ -32,59 +32,202 @@ describe('Test Login', () => {
         done();
     });
 
-    it('Login should show error message', (done) => {
+    it('Login should get login values', (done) => {
 
-        let promises = [];
-        let Login;
-        let component;
+        let Login = require('components/Login/Login').default;
         let loginInformed;
         let passwordInformed;
 
-        promises.push(
-            (() => {
-                User.login = jest.genMockFunction().mockImplementation((login, password) => {
-                    return new Promise((resolve, reject) => {
-                        loginInformed = login;
-                        passwordInformed = password;
-                    });
-                })
-            })()
+        User.login = jest.genMockFunction().mockImplementation((login, password) => {
+            return new Promise((resolve, reject) => {
+                loginInformed = login;
+                passwordInformed = password;
+            });
+        })
+
+        let component = mount(
+            <Login />,
+            { context }
         );
+
+        expect(loginInformed).toEqual(undefined);
+        expect(passwordInformed).toEqual(undefined);
+
+        let inputLogin = component.find('form div p input[type="text"]');
+        let inputPassword = component.find('form div p input[type="password"]');
+
+        inputLogin.node.value = 'Astolfo';
+        inputLogin.simulate('change', inputLogin);
+
+        inputPassword.node.value = 'abcd';
+        inputPassword.simulate('change', inputPassword);
+
+        component.find('form').simulate('submit', { target: component.find('form').get(0) });
+
+        expect(loginInformed).toEqual('Astolfo');
+        expect(passwordInformed).toEqual('abcd');
+
+        done();
+    });
+
+    it('Login should not set localStorage if success is different from 200', (done) => {
+
+        let Login = require('components/Login/Login').default;
+        let promises = [];
+
+        User.login = jest.genMockFunction().mockImplementation((login, password) => {
+            return new Promise((resolve, reject) => {
+                resolve({data: {success: 201, token: 'token_test'}});
+            });
+        })
+
+        let component = mount(
+            <Login />,
+            { context }
+        );
+
+        let inputLogin = component.find('form div p input[type="text"]');
+        let inputPassword = component.find('form div p input[type="password"]');
+
+        inputLogin.node.value = 'Astolfo';
+        inputLogin.simulate('change', inputLogin);
+
+        inputPassword.node.value = 'abcd';
+        inputPassword.simulate('change', inputPassword);
+
+        expect(window.localStorage.getItem('token')).toEqual(null);
 
         promises.push(
             (() => {
-                Login = require('components/Login/Login').default;
-            })()
-        );
-
-        promises.push(
-            (() => {
-                component = mount(
-                    <Login />,
-                    { context }
-                );
+                component.find('form').simulate('submit', { target: component.find('form').get(0) });
             })()
         );
 
         Promise.all(promises).then(() => {
+            expect(window.localStorage.getItem('token')).toEqual(null);
+            done();
+        }).catch((error) => {
+            console.log(error);
+        });
+    });
 
-            expect(loginInformed).toEqual(undefined);
-            expect(passwordInformed).toEqual(undefined);
 
-            let inputLogin = component.find('form div p input[type="text"]');
-            let inputPassword = component.find('form div p input[type="password"]');
+    it('Login should set localStorage', (done) => {
 
-            inputLogin.node.value = 'Astolfo';
-            inputLogin.simulate('change', inputLogin);
+        let Login = require('components/Login/Login').default;
+        let promises = [];
 
-            inputPassword.node.value = 'abcd';
-            inputPassword.simulate('change', inputPassword);
+        User.login = jest.genMockFunction().mockImplementation((login, password) => {
+            return new Promise((resolve, reject) => {
+                resolve({data: {success: 200, token: 'token_test'}});
+            });
+        })
 
-            component.find('form').simulate('submit', { target: component.find('form').get(0) });
+        let component = mount(
+            <Login />,
+            { context }
+        );
 
-            expect(loginInformed).toEqual('Astolfo');
-            expect(passwordInformed).toEqual('abcd');
+        let inputLogin = component.find('form div p input[type="text"]');
+        let inputPassword = component.find('form div p input[type="password"]');
 
+        inputLogin.node.value = 'Astolfo';
+        inputLogin.simulate('change', inputLogin);
+
+        inputPassword.node.value = 'abcd';
+        inputPassword.simulate('change', inputPassword);
+
+        expect(window.localStorage.getItem('token')).toEqual(null);
+
+        promises.push(
+            (() => {
+                component.find('form').simulate('submit', { target: component.find('form').get(0) });
+            })()
+        );
+
+        Promise.all(promises).then(() => {
+            expect(window.localStorage.getItem('token')).toEqual('token_test');
+            done();
+        }).catch((error) => {
+            console.log(error);
+        });
+    });
+
+    it('Login should show error default on state', (done) => {
+
+        let Login = require('components/Login/Login').default;
+        let error = {response:{error:"Another error"}};
+        let promises = [];
+
+        User.login = jest.genMockFunction().mockImplementation((login, password) => {
+            return new Promise((resolve, reject) => {
+                throw error;
+            });
+        })
+
+        let component = mount(
+            <Login />,
+            { context }
+        );
+
+        let inputLogin = component.find('form div p input[type="text"]');
+        let inputPassword = component.find('form div p input[type="password"]');
+
+        inputLogin.node.value = 'Astolfo';
+        inputLogin.simulate('change', inputLogin);
+
+        inputPassword.node.value = 'abcd';
+        inputPassword.simulate('change', inputPassword);
+
+        promises.push(
+            (() => {
+                component.find('form').simulate('submit', { target: component.find('form').get(0) });
+            })()
+        );
+
+        Promise.all(promises).then(() => {
+            expect(component.state().error).toEqual('Authentication failed');
+            done();
+        }).catch((error) => {
+            console.log(error);
+        });
+    });
+
+
+    it('Login should set error received on state', (done) => {
+
+        let Login = require('components/Login/Login').default;
+        let error = {response:{data:{error:"User Not Found"}}};
+        let promises = [];
+
+        User.login = jest.genMockFunction().mockImplementation((login, password) => {
+            return new Promise((resolve, reject) => {
+                throw error;
+            });
+        })
+
+        let component = mount(
+            <Login />,
+            { context }
+        );
+
+        let inputLogin = component.find('form div p input[type="text"]');
+        let inputPassword = component.find('form div p input[type="password"]');
+
+        inputLogin.node.value = 'Astolfo';
+        inputLogin.simulate('change', inputLogin);
+
+        inputPassword.node.value = 'abcd';
+        inputPassword.simulate('change', inputPassword);
+
+        promises.push(
+            (() => {
+                component.find('form').simulate('submit', { target: component.find('form').get(0) });
+            })()
+        );
+
+        Promise.all(promises).then(() => {
+            expect(component.state().error).toEqual('User Not Found');
             done();
         }).catch((error) => {
             console.log(error);
