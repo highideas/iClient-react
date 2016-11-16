@@ -1,13 +1,22 @@
 const path = require('path');
 
+var webpack = require('webpack');
+
 module.exports = {
     entry: "./app/App.js",
     output: {
-        filename: "public/dist/bundle.js"
+        path: 'public/dist/',
+        publicPath: '/dist/',
+        filename: "bundle.min.js",
     },
     module: {
         loaders: [
+            //Bulma loader
             { test: /\.css$/, loader: "style-loader!css-loader" },
+            //Font-awesome loader
+            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
+            //Jsx loader
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -18,6 +27,11 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false }
+        })
+    ],
     resolve: {
         extensions: ['', '.js', '.jsx'],
         root: [

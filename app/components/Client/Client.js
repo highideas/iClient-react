@@ -1,24 +1,34 @@
 import React from 'react';
 
-import Client from 'services/Client';
+import ClientService from 'services/Client';
+import Error from 'components/Error/Error'
 
-class ClientComponent extends React.Component
+class Client extends React.Component
 {
     constructor(props) {
         super(props);
         this.state = {
-            clients : []
+            clients : [],
+            error : ''
         };
         this.getClients();
     }
 
     getClients() {
-        Client.getClients().then((response) => {
+        ClientService.getClients().then((response) => {
             this.setState({clients: response.data.clients});
+        }).catch((error) => {
+            this.setState({error: 'Error Found: Trying get client'});
+            if (error.response) {
+                this.setState({error: error.response.data.error});
+            }
         });
     }
 
     render() {
+        if (this.state.error) {
+            return (<Error error={this.state.error} />);
+        }
         const clientList = this.state.clients.map((client, key) => {
             return (
                 <tr key={key} >
@@ -52,5 +62,5 @@ class ClientComponent extends React.Component
     }
 }
 
-export default ClientComponent;
+export default Client;
 

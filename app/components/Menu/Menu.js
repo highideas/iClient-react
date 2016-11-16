@@ -1,47 +1,46 @@
 import React from 'react';
-import { Router, Link } from 'react-router'
+import { Router } from 'react-router'
+
+import Nav from 'components/Nav/Nav'
+import LinksApp from 'components/LinksApp/LinksApp'
+
 
 class Menu extends React.Component{
     constructor(props, context) {
         super(props, context);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleView = this.handleView.bind(this);
+        this.state = {
+            links: [
+                [ '/', 'Home'],
+                ['/client', 'Client'],
+                ['/area', 'Area']
+            ]
+        };
     }
 
     handleLogout() {
-        delete localStorage.token;
+        window.localStorage.removeItem('token');
         this.context.router.push("/");
     }
 
     handleView() {
         return (
-            <nav className="nav has-shadow" id="top">
-                <div className="container">
-                    <div className="nav-left">
-                        <a className="nav-item" href="../index.html">IClient</a>
-                    </div>
-                    <span className="nav-toggle">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
-                    <div className="nav-right nav-menu">
-                        <Link to="/" className="nav-item is-tab is-active">Home</Link>
-                        <Link to="/client" className="nav-item is-tab">Client</Link>
-                        <Link to="/area" className="nav-item is-tab">Area</Link>
-                        <span className="nav-item">
-                            <a className="button" onClick={this.handleLogout}>Logout</a>
-                        </span>
-                    </div>
-                </div>
-            </nav>
+            <Nav>
+                <LinksApp
+                    links={this.state.links}
+                />
+                <span className="nav-item">
+                    <a className="button" onClick={this.handleLogout}>Logout</a>
+                </span>
+            </Nav>
         );
     }
 
     render() {
         let view = this.handleView();
 
-        if (!localStorage.token) {
+        if (!window.localStorage.getItem('token')) {
             view = <span></span>;
         }
         return (
