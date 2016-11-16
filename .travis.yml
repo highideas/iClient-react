@@ -1,12 +1,8 @@
 language: node_js
 node_js:
-    - "6"
-
-services:
-    - mongodb
+    - "6.7"
 
 before_script:
-    - cd /client/
     - npm install
 
 script:
