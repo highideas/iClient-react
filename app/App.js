@@ -1,19 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute } from 'react-router'
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
+import 'bulma/css/bulma.css'
+import 'font-awesome-webpack'
 
-import iClientComponent from './components/iClient/iClientComponent';
-import HomeComponent from './components/Home/HomeComponent';
-import ClientComponent from './components/Client/ClientComponent';
+import iClientComponent from 'components/IClient/IClient';
+import HomeComponent from 'components/Home/Home';
+import ClientComponent from 'components/Client/Client';
+import AreaComponent from 'components/Area/Area';
 
 ReactDOM.render(
-    <section className="hero is-fullheight is-primary">
-        <Router>
-            <Route path="/" component={iClientComponent} >
-                <IndexRoute component={HomeComponent} />
-                <Route path="client" component={ClientComponent} />
-            </Route>
-        </Router>
-    </section>,
+    <Router history={hashHistory} >
+        <Route path="/" component={iClientComponent} >
+            <IndexRoute component={HomeComponent} />
+            <Route path="client" component={ClientComponent} />
+            <Route path="area" component={AreaComponent} />
+            <Route path="visit/:id" component={AreaComponent} />
+        </Route>
+    </Router>,
     document.getElementById('app')
 );
