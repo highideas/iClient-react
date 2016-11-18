@@ -8,7 +8,7 @@ class LinksApp extends React.Component
         this.generate = this.generate.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.state = {
-            links: this.props.links || []
+            links: this.props.links
         };
     }
 
@@ -19,17 +19,19 @@ class LinksApp extends React.Component
     }
 
     generate() {
-        return this.state.links.map((link, index) => (
-            <Link to={link[0]}
-                key={index}
-                className="nav-item is-tab"
-                onlyActiveOnIndex={true}
-                activeClassName="is-active"
-                onClick={this.handleClick}
-            >
-                {link[1]}
-            </Link>
-        ));
+        return this.state.links.map((link, index) => {
+            return (
+                <Link to={link[0]}
+                    key={index}
+                    className="nav-item is-tab"
+                    onlyActiveOnIndex={true}
+                    activeClassName="is-active"
+                    onClick={this.handleClick}
+                >
+                    {link[1]}
+                </Link>
+            );
+        });
     }
 
     render() {

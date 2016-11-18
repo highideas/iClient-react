@@ -20,7 +20,7 @@ class Menu extends React.Component{
     }
 
     handleLogout() {
-        delete localStorage.token;
+        window.localStorage.removeItem('token');
         this.context.router.push("/");
     }
 
@@ -40,7 +40,7 @@ class Menu extends React.Component{
     render() {
         let view = this.handleView();
 
-        if (!localStorage.token) {
+        if (!window.localStorage.getItem('token')) {
             view = <span></span>;
         }
         return (
