@@ -1,68 +1,63 @@
 import React from 'react';
-import { Router, Link } from 'react-router'
+import { Link } from 'react-router'
 
-import Visit from 'services/Visit';
+import VisitService from 'services/Visit'
+
+import Visit from 'components/Visit/Visit'
+import ErrorComponent from 'components/Error/Error'
 
 class Area extends React.Component
 {
     constructor(props) {
         super(props);
         this.state = {
-            areas : []
+            areas : [],
+            error : ''
         };
-        this.renderVisit = this.renderVisit.bind(this);
-        this.renderArea = this.renderArea.bind(this);
+        this.generate = this.generate.bind(this);
+        this.generateError = this.generateError.bind(this);
+        this.getVisitGroupByArea = this.getVisitGroupByArea.bind(this);
         this.getVisitGroupByArea();
     }
 
     getVisitGroupByArea() {
-        Visit.getGroupByArea().then((response) => {
-            this.setState({areas: response.data.visits});
+        VisitService.getGroupByArea().then((response) => {
+            this.setState({error: ''});
+            this.setState({
+                areas: this.generate(response.data.visits)
+            });
+        }).catch((error) => {
+            if (error.response) {
+                this.setState({error: error.response.data.error});
+            }
         });
     }
 
-    renderVisit(visits) {
-        return visits.map((areaVisit, key) => {
-            return (
-                <tr key={ key } >
-                    <td>{ areaVisit.visit.client.name }</td>
-                    <td>{ areaVisit.visit.visit_date }</td>
-                    <td className="is-icon">
-                        <Link to={ `/visit/${areaVisit.visit._id}` } >
-                            <i className="fa fa-info-circle" />
-                        </Link>
-                    </td>
-                </tr>
-            );
-        });
+    generateError(error) {
+        return (
+            <ErrorComponent error={this.state.error} />
+        );
     }
 
-    renderArea(areas) {
+    generate(areas) {
         return areas.map((area, key) => {
             return (
                 <div className="area" key={ key }>
                     <h3 className="title is-3">{area._id}</h3>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Last Visit</th>
-                                <th />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.renderVisit(area.visits)}
-                        </tbody>
-                    </table>
+                    <Visit visits={area.visits} />
                 </div>
             );
         });
     }
 
     render() {
+        if (this.state.error) {
+            let error = this.generateError(this.state.error);
+            return error;
+        }
         return (
             <div className="container hello">
-                { this.renderArea(this.state.areas) }
+                { this.state.areas }
             </div>
         );
     }
