@@ -97,7 +97,8 @@ describe('Test Client', () => {
         let response = {
             data: {
                 clients: [
-                    {name: 'Jon Snow', address: '7 Street', city: 'Winterfell'}
+                    {name: 'Jon Snow', address: '7 Street', city: 'Winterfell'},
+                    {name: 'Cotter Pyke', address: '0 Street', city: 'Castle Black'},
                 ]
             }
         };
@@ -131,9 +132,9 @@ describe('Test Client', () => {
 
         Promise.all(promises).then(() => {
             component.update();
-            expect(component.find('td').at(0).text()).toEqual('Jon Snow');
-            expect(component.find('td').at(1).text()).toEqual('7 Street');
-            expect(component.find('td').at(2).text()).toEqual('Winterfell');
+            expect(component.find('.message-header').at(0).text()).toEqual('Jon Snow');
+            expect(component.find('.message-body > address').at(0).text()).toEqual('7 Street');
+            expect(component.find('.message-body > city').at(0).text()).toEqual('Winterfell');
             done();
         }).catch((error) => {
             console.log(error);
