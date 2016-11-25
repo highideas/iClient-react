@@ -1,8 +1,11 @@
 import React from 'react';
 import { CardStack, Card } from 'react-cardstack';
+import { Link } from 'react-router'
 
-import ClientService from 'services/Client';
+import ClientService from 'services/Client'
 import Error from 'components/Error/Error'
+
+import btn from 'components/Client/styles.css'
 
 class Client extends React.Component
 {
@@ -34,33 +37,69 @@ class Client extends React.Component
             return <div>Loading...</div>;
         }
         const clientList = this.state.clients.map((client, key) => {
+            let line = ((key % 2) ? 'is-success' : 'is-info');
             return (
-                <Card key={key}>
-                    <article className={`message ${((key % 2) ? 'is-success' : 'is-info')}`}>
-                        <div className="message-header">
-                            <strong>{ client.name }</strong>
+                <div className={`columns notification ${line}`} key={key}>
+                        <div className="column">
+                            { client.name }
                         </div>
-                        <div className="message-body">
-                            <address>{ client.address }</address>
-                            <city><small>{ client.city }</small></city>
+                        <div className="column">
+                            { client.address }
                         </div>
-                    </article>
-                </Card>
+                        <div className="column">
+                            { client.city }
+                        </div>
+                        <div className="column">
+                            <Link to={ `#` }
+                                className="button is-info is-button-block"
+                            >
+                                <span className="icon">
+                                    <i className="fa fa-check"></i>
+                                </span>
+                                <span>Visited</span>
+                            </Link>
+                        </div>
+
+                        <div className="column">
+                            <Link to={ `#` }
+                                className="button is-info is-button-block"
+                            >
+                                <span className="icon">
+                                    <i className="fa fa-calendar"></i>
+                                </span>
+                                <span>Schedule</span>
+                            </Link>
+                        </div>
+
+                        <div className="column">
+                            <Link to={ `#` }
+                                className="button is-info is-button-block"
+                            >
+                                <span className="icon">
+                                    <i className="fa fa-pencil"></i>
+                                </span>
+                                <span>Update</span>
+                            </Link>
+                        </div>
+
+                        <div className="column">
+                            <Link to={ `#` }
+                                className="button is-danger is-button-block"
+                            >
+                                <span className="icon">
+                                    <i className="fa fa-close"></i>
+                                </span>
+                                <span>Delete</span>
+                            </Link>
+                        </div>
+                </div>
             );
         });
 
         return (
-            <div className="container hello">
-                <CardStack
-                    height={100}
-                    width={1200}
-                    background='#00d1b2'
-                    hoverOffset={0}>
-
+                <div>
                     { clientList }
-
-                </CardStack>
-            </div>
+                </div>
         );
     }
 }
