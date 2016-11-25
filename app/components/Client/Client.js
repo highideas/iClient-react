@@ -5,8 +5,6 @@ import { Link } from 'react-router'
 import ClientService from 'services/Client'
 import Error from 'components/Error/Error'
 
-import btn from 'components/Client/styles.css'
-
 class Client extends React.Component
 {
     constructor(props) {
@@ -39,67 +37,46 @@ class Client extends React.Component
         const clientList = this.state.clients.map((client, key) => {
             let line = ((key % 2) ? 'is-success' : 'is-info');
             return (
-                <div className={`columns notification ${line}`} key={key}>
-                        <div className="column">
+                <tr key={key}>
+                        <td>
                             { client.name }
-                        </div>
-                        <div className="column">
-                            { client.address }
-                        </div>
-                        <div className="column">
-                            { client.city }
-                        </div>
-                        <div className="column">
-                            <Link to={ `#` }
-                                className="button is-info is-button-block"
-                            >
-                                <span className="icon">
-                                    <i className="fa fa-check"></i>
-                                </span>
-                                <span>Visited</span>
+                        </td>
+                        <td>
+                            { client.address } - { client.city }
+                        </td>
+                        <td className="is-icon">
+                            <Link to={ `#` } >
+                                <i className="fa fa-address-card"></i>
                             </Link>
-                        </div>
+                        </td>
 
-                        <div className="column">
-                            <Link to={ `#` }
-                                className="button is-info is-button-block"
-                            >
-                                <span className="icon">
-                                    <i className="fa fa-calendar"></i>
-                                </span>
-                                <span>Schedule</span>
+                        <td className="is-icon">
+                            <Link to={ `#` } >
+                                <i className="fa fa-check"></i>
                             </Link>
-                        </div>
+                        </td>
 
-                        <div className="column">
-                            <Link to={ `#` }
-                                className="button is-info is-button-block"
-                            >
-                                <span className="icon">
-                                    <i className="fa fa-pencil"></i>
-                                </span>
-                                <span>Update</span>
+                        <td className="is-icon">
+                            <Link to={ `#` } >
+                                <i className="fa fa-calendar"></i>
                             </Link>
-                        </div>
+                        </td>
 
-                        <div className="column">
-                            <Link to={ `#` }
-                                className="button is-danger is-button-block"
-                            >
-                                <span className="icon">
-                                    <i className="fa fa-close"></i>
-                                </span>
-                                <span>Delete</span>
+                        <td className="is-icon">
+                            <Link to={ `#` } >
+                                <i className="fa fa-close"></i>
                             </Link>
-                        </div>
-                </div>
+                        </td>
+                </tr>
             );
         });
 
         return (
-                <div>
-                    { clientList }
-                </div>
+                <table className="table">
+                    <tbody>
+                        { clientList }
+                    </tbody>
+                </table>
         );
     }
 }

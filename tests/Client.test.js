@@ -132,9 +132,8 @@ describe('Test Client', () => {
 
         Promise.all(promises).then(() => {
             component.update();
-            expect(component.find('.message-header').at(0).text()).toEqual('Jon Snow');
-            expect(component.find('.message-body > address').at(0).text()).toEqual('7 Street');
-            expect(component.find('.message-body > city').at(0).text()).toEqual('Winterfell');
+            expect(component.find('tbody td').at(0).text()).toEqual('Jon Snow');
+            expect(component.find('tbody td').at(1).text()).toEqual('7 Street - Winterfell');
             done();
         }).catch((error) => {
             console.log(error);
