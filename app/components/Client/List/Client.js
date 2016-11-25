@@ -38,35 +38,35 @@ class Client extends React.Component
             let line = ((key % 2) ? 'is-success' : 'is-info');
             return (
                 <tr key={key}>
-                        <td>
-                            { client.name }
-                        </td>
-                        <td>
-                            { client.address } - { client.city }
-                        </td>
-                        <td className="is-icon">
-                            <Link to={ `#` } >
-                                <i className="fa fa-address-card"></i>
-                            </Link>
-                        </td>
+                    <td>
+                        { client.name }
+                    </td>
+                    <td>
+                        { client.address } - { client.city }
+                    </td>
+                    <td className="is-icon">
+                        <Link to={ `/client/${client._id}` } >
+                            <i className="fa fa-address-card"></i>
+                        </Link>
+                    </td>
 
-                        <td className="is-icon">
-                            <Link to={ `#` } >
-                                <i className="fa fa-check"></i>
-                            </Link>
-                        </td>
+                    <td className="is-icon">
+                        <Link to={ `#` } >
+                            <i className="fa fa-check"></i>
+                        </Link>
+                    </td>
 
-                        <td className="is-icon">
-                            <Link to={ `#` } >
-                                <i className="fa fa-calendar"></i>
-                            </Link>
-                        </td>
+                    <td className="is-icon">
+                        <Link to={ `#` } >
+                            <i className="fa fa-calendar"></i>
+                        </Link>
+                    </td>
 
-                        <td className="is-icon">
-                            <Link to={ `#` } >
-                                <i className="fa fa-close"></i>
-                            </Link>
-                        </td>
+                    <td className="is-icon">
+                        <Link to={ `#` } >
+                            <i className="fa fa-close"></i>
+                        </Link>
+                    </td>
                 </tr>
             );
         });

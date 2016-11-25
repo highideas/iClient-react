@@ -1,7 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import LoginComponent from 'components/Login/Login';
-import MenuComponent from 'components/Menu/Menu';
+import LoginComponent from 'components/Login/Login'
+import MenuComponent from 'components/Menu/Menu'
+
+import styles from 'components/IClient/styles.css'
 
 class IClient extends React.Component
 {
@@ -14,7 +16,7 @@ class IClient extends React.Component
         return (
             <div>
                 <MenuComponent />
-                <section className="hero is-fullheight is-primary">
+                <section className="body-primary">
                     {this.props.children}
                 </section>
             </div>

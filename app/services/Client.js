@@ -3,13 +3,17 @@ import axios from 'axios';
 import { HOST } from 'constants/Server';
 
 const Client = {
-    getClients() {
+    getClients(id = null) {
         let config = {
             headers: {
                 Authorization : localStorage.token
             }
         };
-        return axios.get(`${HOST}/api/v1/client`, config);
+        let url = [HOST, 'api', 'v1', 'client'];
+        if (id) {
+            url.push(id);
+        }
+        return axios.get(url.join('/'), config);
     }
 };
 

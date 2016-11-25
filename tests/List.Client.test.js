@@ -1,5 +1,5 @@
 jest.enableAutomock();
-jest.dontMock('components/Client/Client');
+jest.dontMock('components/Client/List/Client');
 jest.dontMock('components/Error/Error');
 jest.dontMock('react');
 jest.dontMock('axios');
@@ -31,7 +31,7 @@ describe('Test Client', () => {
 
         promises.push(
             (() => {
-                Client = require('components/Client/Client').default;
+                Client = require('components/Client/List/Client').default;
             })()
         );
 
@@ -71,7 +71,7 @@ describe('Test Client', () => {
 
         promises.push(
             (() => {
-                Client = require('components/Client/Client').default;
+                Client = require('components/Client/List/Client').default;
             })()
         );
 
@@ -118,7 +118,7 @@ describe('Test Client', () => {
 
         promises.push(
             (() => {
-                Client = require('components/Client/Client').default;
+                Client = require('components/Client/List/Client').default;
             })()
         );
 
