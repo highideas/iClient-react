@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import LoginComponent from 'components/Login/Login'
 import MenuComponent from 'components/Menu/Menu'

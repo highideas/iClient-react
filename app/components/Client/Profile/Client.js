@@ -1,5 +1,4 @@
 import React from 'react';
-import { CardStack, Card } from 'react-cardstack';
 import { Link } from 'react-router'
 
 import ClientService from 'services/Client'
