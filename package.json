@@ -12,6 +12,7 @@
     "react-router": "^2.8.1"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.7.1",
     "babel-core": "^6.17.0",
     "babel-jest": "^16.0.0",
     "babel-loader": "^6.2.5",
@@ -47,8 +48,8 @@
     ],
     "collectCoverage": true,
     "moduleNameMapper": {
-        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
-        "\\.(css|less)$": "<rootDir>/tests/__mocks__/styleMock.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/tests/__mocks__/styleMock.js"
     }
   },
   "author": "",

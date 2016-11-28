@@ -1,4 +1,5 @@
 import React from 'react';
+import { CardStack, Card } from 'react-cardstack';
 import { Link } from 'react-router'
 
 import ClientService from 'services/Client'
@@ -13,15 +14,15 @@ class Client extends React.Component
             client : null,
             error : ''
         };
-        this.getClients(this.props.params.id);
+        this.getClient(this.props.params.id);
     }
 
-    getClients(id) {
-        ClientService.getClients(id).then((response) => {
+    getClient(id) {
+        ClientService.getClient(id).then((response) => {
             this.setState({client: response.data.client.shift()});
         }).catch((error) => {
             this.setState({error: 'Error Found: Trying get client'});
-            if (error.response) {
+            if (typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });
@@ -44,30 +45,22 @@ class Client extends React.Component
                                 <img src="https://placehold.it/256x256" />
                             </div>
                         </div>
-                        <div className="column is-4 name">
+                        <div className="column is-6 name">
                             <p>
                                 <span className="title is-bold color-black">
                                     <strong>{this.state.client.name}</strong>
                                 </span>
                             </p>
                             <p className="tagline">
-                                {this.state.client.address} - {this.state.client.city}
+                                {this.state.client.address}
                             </p>
                             <p>
-                                <strong>{this.state.client.area._id}</strong>
+                                <strong>{this.state.client.city}</strong>
                             </p>
                         </div>
-                        <div className="column is-2 followers has-text-centered">
-                            <p className="stat-val">129k</p>
-                            <p className="stat-key">followers</p>
-                        </div>
-                        <div className="column is-2 following has-text-centered">
-                            <p className="stat-val">2k</p>
-                            <p className="stat-key">following</p>
-                        </div>
-                        <div className="column is-2 likes has-text-centered">
-                            <p className="stat-val">29</p>
-                            <p className="stat-key">likes</p>
+                        <div className="column is-4 followers has-text-centered">
+                            <p className="stat-val">Area</p>
+                            <p className="stat-key"><strong>{this.state.client.area._id}</strong></p>
                         </div>
                     </div>
                 </div>
