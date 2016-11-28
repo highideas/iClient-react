@@ -27,7 +27,7 @@ class Login extends React.Component
             }
         }).catch((error) => {
             this.setState({error: 'Authentication failed'});
-            if (error.response.data) {
+            if (typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });

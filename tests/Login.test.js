@@ -4,6 +4,8 @@ jest.dontMock('components/Error/Error');
 jest.dontMock('react');
 jest.dontMock('axios');
 jest.dontMock('enzyme');
+jest.dontMock('axios-mock-adapter');
+jest.dontMock('services/User');
 
 describe('Test Login', () => {
     require('../tests/__mocks__/LocalStorageMock');
@@ -18,6 +20,9 @@ describe('Test Login', () => {
             push: (arg) => arg
         }
     };
+    let axios = require('axios');
+    let MockAdapter = require('axios-mock-adapter');
+
     let User = require('services/User').default;
 
     it('Login should show form', (done) => {
@@ -27,31 +32,87 @@ describe('Test Login', () => {
             { context }
         );
 
-        expect(component.find('form').length).toEqual(1);
+        setTimeout(() => {
+            expect(component.find('form').length).toEqual(1);
 
-        done();
+            done();
+        }, 0);
     });
 
-    it('Login should get login values', (done) => {
+    it('Login should not set localStorage if success is different from 200', (done) => {
 
         let Login = require('components/Login/Login').default;
-        let loginInformed;
-        let passwordInformed;
+        let mockAdapter = new MockAdapter(axios);
 
-        User.login = jest.genMockFunction().mockImplementation((login, password) => {
-            return new Promise((resolve, reject) => {
-                loginInformed = login;
-                passwordInformed = password;
-            });
-        })
+        mockAdapter.onPost('http://localhost:3000/authenticate').reply(201, {success: 201, token: 'token_test'});
 
         let component = mount(
             <Login />,
             { context }
         );
 
-        expect(loginInformed).toEqual(undefined);
-        expect(passwordInformed).toEqual(undefined);
+        let inputLogin = component.find('form div p input[type="text"]');
+        let inputPassword = component.find('form div p input[type="password"]');
+
+        inputLogin.node.value = 'Astolfo';
+        inputLogin.simulate('change', inputLogin);
+
+        inputPassword.node.value = 'abcd';
+        inputPassword.simulate('change', inputPassword);
+
+        expect(window.localStorage.getItem('token')).toEqual(null);
+
+        component.find('form').simulate('submit', { target: component.find('form').get(0) });
+
+        setTimeout(() => {
+            expect(window.localStorage.getItem('token')).toEqual(null);
+            done();
+        }, 0);
+    });
+
+    it('Login should set localStorage', (done) => {
+
+        let Login = require('components/Login/Login').default;
+        let mockAdapter = new MockAdapter(axios);
+
+        mockAdapter.onPost('http://localhost:3000/authenticate').reply(200, {success: 200, token: 'token_test'});
+
+        let component = mount(
+            <Login />,
+            { context }
+        );
+
+        let inputLogin = component.find('form div p input[type="text"]');
+        let inputPassword = component.find('form div p input[type="password"]');
+
+        inputLogin.node.value = 'Astolfo';
+        inputLogin.simulate('change', inputLogin);
+
+        inputPassword.node.value = 'abcd';
+        inputPassword.simulate('change', inputPassword);
+
+        expect(window.localStorage.getItem('token')).toEqual(null);
+
+        component.find('form').simulate('submit', { target: component.find('form').get(0) });
+
+        setTimeout(() => {
+            expect(window.localStorage.getItem('token')).toEqual('token_test');
+            done();
+        }, 0);
+    });
+
+    it('Login should show error default on state', (done) => {
+
+        let Login = require('components/Login/Login').default;
+        let response = {};
+        let mockAdapter = new MockAdapter(axios);
+
+        mockAdapter.onPost('http://localhost:3000/authenticate').reply(503, response);
+
+        let component = mount(
+            <Login />,
+            { context }
+        );
 
         let inputLogin = component.find('form div p input[type="text"]');
         let inputPassword = component.find('form div p input[type="password"]');
@@ -64,147 +125,19 @@ describe('Test Login', () => {
 
         component.find('form').simulate('submit', { target: component.find('form').get(0) });
 
-        expect(loginInformed).toEqual('Astolfo');
-        expect(passwordInformed).toEqual('abcd');
-
-        done();
-    });
-
-    it('Login should not set localStorage if success is different from 200', (done) => {
-
-        let Login = require('components/Login/Login').default;
-        let promises = [];
-
-        User.login = jest.genMockFunction().mockImplementation((login, password) => {
-            return new Promise((resolve, reject) => {
-                resolve({data: {success: 201, token: 'token_test'}});
-            });
-        })
-
-        let component = mount(
-            <Login />,
-            { context }
-        );
-
-        let inputLogin = component.find('form div p input[type="text"]');
-        let inputPassword = component.find('form div p input[type="password"]');
-
-        inputLogin.node.value = 'Astolfo';
-        inputLogin.simulate('change', inputLogin);
-
-        inputPassword.node.value = 'abcd';
-        inputPassword.simulate('change', inputPassword);
-
-        expect(window.localStorage.getItem('token')).toEqual(null);
-
-        promises.push(
-            (() => {
-                component.find('form').simulate('submit', { target: component.find('form').get(0) });
-            })()
-        );
-
-        Promise.all(promises).then(() => {
-            expect(window.localStorage.getItem('token')).toEqual(null);
-            done();
-        }).catch((error) => {
-            console.log(error);
-        });
-    });
-
-
-    it('Login should set localStorage', (done) => {
-
-        let Login = require('components/Login/Login').default;
-        let promises = [];
-
-        User.login = jest.genMockFunction().mockImplementation((login, password) => {
-            return new Promise((resolve, reject) => {
-                resolve({data: {success: 200, token: 'token_test'}});
-            });
-        })
-
-        let component = mount(
-            <Login />,
-            { context }
-        );
-
-        let inputLogin = component.find('form div p input[type="text"]');
-        let inputPassword = component.find('form div p input[type="password"]');
-
-        inputLogin.node.value = 'Astolfo';
-        inputLogin.simulate('change', inputLogin);
-
-        inputPassword.node.value = 'abcd';
-        inputPassword.simulate('change', inputPassword);
-
-        expect(window.localStorage.getItem('token')).toEqual(null);
-
-        promises.push(
-            (() => {
-                component.find('form').simulate('submit', { target: component.find('form').get(0) });
-            })()
-        );
-
-        Promise.all(promises).then(() => {
-            expect(window.localStorage.getItem('token')).toEqual('token_test');
-            done();
-        }).catch((error) => {
-            console.log(error);
-        });
-    });
-
-    it('Login should show error default on state', (done) => {
-
-        let Login = require('components/Login/Login').default;
-        let error = {response:{error:"Another error"}};
-        let promises = [];
-
-        User.login = jest.genMockFunction().mockImplementation((login, password) => {
-            return new Promise((resolve, reject) => {
-                throw error;
-            });
-        })
-
-        let component = mount(
-            <Login />,
-            { context }
-        );
-
-        let inputLogin = component.find('form div p input[type="text"]');
-        let inputPassword = component.find('form div p input[type="password"]');
-
-        inputLogin.node.value = 'Astolfo';
-        inputLogin.simulate('change', inputLogin);
-
-        inputPassword.node.value = 'abcd';
-        inputPassword.simulate('change', inputPassword);
-
-        promises.push(
-            (() => {
-                component.find('form').simulate('submit', { target: component.find('form').get(0) });
-            })()
-        );
-
-        Promise.all(promises).then(() => {
+        setTimeout(() => {
             expect(component.state().error).toEqual('Authentication failed');
             done();
-        }).catch((error) => {
-            console.log(error);
-        });
+        }, 0);
     });
-
 
     it('Login should set error received on state', (done) => {
 
         let Login = require('components/Login/Login').default;
-        let error = {response:{data:{error:"User Not Found"}}};
-        let promises = [];
+        let response = { error:"User Not Found" };
+        let mockAdapter = new MockAdapter(axios);
 
-        User.login = jest.genMockFunction().mockImplementation((login, password) => {
-            return new Promise((resolve, reject) => {
-                throw error;
-            });
-        })
+        mockAdapter.onPost('http://localhost:3000/authenticate').reply(401, response);
 
         let component = mount(
             <Login />,
@@ -220,18 +153,12 @@ describe('Test Login', () => {
         inputPassword.node.value = 'abcd';
         inputPassword.simulate('change', inputPassword);
 
-        promises.push(
-            (() => {
-                component.find('form').simulate('submit', { target: component.find('form').get(0) });
-            })()
-        );
+        component.find('form').simulate('submit', { target: component.find('form').get(0) });
 
-        Promise.all(promises).then(() => {
+        setTimeout(() => {
             expect(component.state().error).toEqual('User Not Found');
             done();
-        }).catch((error) => {
-            console.log(error);
-        });
+        }, 0);
     });
 
 });
