@@ -20,7 +20,7 @@ class Client extends React.Component
             this.setState({clients: response.data.clients});
         }).catch((error) => {
             this.setState({error: 'Error Found: Trying get client'});
-            if (error.response) {
+            if (typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });

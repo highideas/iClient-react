@@ -65,7 +65,6 @@ describe('Test Client', () => {
 
         let id = '123abc';
         let response = { error:"Client Not Found" };
-        let promises = [];
         let Client;
         let component;
         let mockAdapter = new MockAdapter(axios);
@@ -90,7 +89,6 @@ describe('Test Client', () => {
 
         let id = '123abc';
         let response = {};
-        let promises = [];
         let Client;
         let component;
         let mockAdapter = new MockAdapter(axios);
