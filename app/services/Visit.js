@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { HOST } from 'constants/Server';
-
 const Visit = {
     getGroupByArea() {
         let config = {

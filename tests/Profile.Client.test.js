@@ -27,6 +27,8 @@ describe('Test Client', () => {
                         name: 'Jon Snow',
                         address: '7 Street',
                         city: 'Winterfell',
+                        ability: 200,
+                        frequency: 10,
                         area: {
                             _id: 'Center',
                             parents: 'Center'
@@ -38,7 +40,7 @@ describe('Test Client', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/client/' + id).reply(200, response);
+        mockAdapter.onGet(HOST + '/api/v1/client/' + id).reply(200, response);
 
         Client = require('components/Client/Profile/Client').default;
 
@@ -49,10 +51,12 @@ describe('Test Client', () => {
         setTimeout(() => {
 
             expect(component.find('.name p').at(0).text()).toEqual('Jon Snow');
-            expect(component.find('.name p').at(1).text()).toEqual('7 Street');
-            expect(component.find('.name p').at(2).text()).toEqual('Winterfell');
-            expect(component.find('.followers p').at(0).text()).toEqual('Area');
-            expect(component.find('.followers p').at(1).text()).toEqual('Center');
+            expect(component.find('.name p').at(1).text()).toEqual('Address: 7 Street - Winterfell');
+            expect(component.find('.name p').at(2).text()).toEqual('Area: Center');
+            expect(component.find('.followers p').at(0).text()).toEqual('10');
+            expect(component.find('.followers p').at(1).text()).toEqual('Frequency');
+            expect(component.find('.followers p').at(2).text()).toEqual('200');
+            expect(component.find('.followers p').at(3).text()).toEqual('Ability');
             expect(component.find('.nav-menu span a').at(0).text()).toEqual('Visited');
             expect(component.find('.nav-menu span a').at(1).text()).toEqual('Update');
             expect(component.find('.nav-menu span a').at(2).text()).toEqual('Schedule');
@@ -69,7 +73,7 @@ describe('Test Client', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/client/' + id).reply(404, response);
+        mockAdapter.onGet(HOST + '/api/v1/client/' + id).reply(404, response);
 
         Client = require('components/Client/Profile/Client').default;
 
@@ -93,7 +97,7 @@ describe('Test Client', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/client/' + id).reply(503, response);
+        mockAdapter.onGet(HOST + '/api/v1/client/' + id).reply(503, response);
 
         Client = require('components/Client/Profile/Client').default;
 

@@ -44,7 +44,7 @@ describe('Test Login', () => {
         let Login = require('components/Login/Login').default;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onPost('http://localhost:3000/authenticate').reply(201, {success: 201, token: 'token_test'});
+        mockAdapter.onPost(HOST + '/authenticate').reply(201, {success: 201, token: 'token_test'});
 
         let component = mount(
             <Login />,
@@ -75,7 +75,7 @@ describe('Test Login', () => {
         let Login = require('components/Login/Login').default;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onPost('http://localhost:3000/authenticate').reply(200, {success: 200, token: 'token_test'});
+        mockAdapter.onPost(HOST + '/authenticate').reply(200, {success: 200, token: 'token_test'});
 
         let component = mount(
             <Login />,
@@ -107,7 +107,7 @@ describe('Test Login', () => {
         let response = {};
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onPost('http://localhost:3000/authenticate').reply(503, response);
+        mockAdapter.onPost(HOST + '/authenticate').reply(503, response);
 
         let component = mount(
             <Login />,
@@ -137,7 +137,7 @@ describe('Test Login', () => {
         let response = { error:"User Not Found" };
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onPost('http://localhost:3000/authenticate').reply(401, response);
+        mockAdapter.onPost(HOST + '/authenticate').reply(401, response);
 
         let component = mount(
             <Login />,

@@ -24,7 +24,7 @@ describe('Test Client', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/client').reply(404, response);
+        mockAdapter.onGet(HOST + '/api/v1/client').reply(404, response);
 
         Client = require('components/Client/List/Client').default;
 
@@ -46,7 +46,7 @@ describe('Test Client', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/client').reply(503, response);
+        mockAdapter.onGet(HOST + '/api/v1/client').reply(503, response);
 
         Client = require('components/Client/List/Client').default;
 
@@ -73,7 +73,7 @@ describe('Test Client', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/client').reply(200, response);
+        mockAdapter.onGet(HOST + '/api/v1/client').reply(200, response);
 
         Client = require('components/Client/List/Client').default;
 
