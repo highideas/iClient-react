@@ -44,22 +44,26 @@ class Client extends React.Component
                                 <img src="https://placehold.it/256x256" />
                             </div>
                         </div>
-                        <div className="column is-6 name">
+                        <div className="column is-4 name">
                             <p>
                                 <span className="title is-bold color-black">
                                     <strong>{this.state.client.name}</strong>
                                 </span>
                             </p>
                             <p className="tagline">
-                                {this.state.client.address}
+                                <strong>Address: </strong>{this.state.client.address} - {this.state.client.city}
                             </p>
                             <p>
-                                <strong>{this.state.client.city}</strong>
+                                <strong>Area: </strong>{this.state.client.area._id}
                             </p>
                         </div>
-                        <div className="column is-4 followers has-text-centered">
-                            <p className="stat-val">Area</p>
-                            <p className="stat-key"><strong>{this.state.client.area._id}</strong></p>
+                        <div className="column is-3 followers has-text-centered">
+                            <p className="stat-val"><strong>{this.state.client.frequency}</strong></p>
+                            <p className="stat-key">Frequency</p>
+                        </div>
+                        <div className="column is-3 followers has-text-centered">
+                            <p className="stat-val"><strong>{this.state.client.ability}</strong></p>
+                            <p className="stat-key">Ability</p>
                         </div>
                     </div>
                 </div>

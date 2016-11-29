@@ -71,11 +71,28 @@ class Client extends React.Component
         });
 
         return (
-                <table className="table">
-                    <tbody>
-                        { clientList }
-                    </tbody>
-                </table>
+            <section className="">
+                <div className="container hello">
+                    <div className="level header">
+                        <div className="level-left">
+                            <h2 className="title is-2">iClient</h2>
+                        </div>
+                        <div className="level-right">
+                            <Link to='/client' className="button is-info is-medium">
+                                <span className="icon">
+                                    <i className="fa fa-plus"></i>
+                                </span>
+                                <span>New Client</span>
+                            </Link>
+                        </div>
+                    </div>
+                    <table className="table">
+                        <tbody>
+                            { clientList }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         );
     }
 }
