@@ -27,7 +27,7 @@ class Area extends React.Component
                 areas: this.generate(response.data.visits)
             });
         }).catch((error) => {
-            if (error.response) {
+            if (typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });

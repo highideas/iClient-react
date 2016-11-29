@@ -27,7 +27,7 @@ class Login extends React.Component
             }
         }).catch((error) => {
             this.setState({error: 'Authentication failed'});
-            if (error.response.data) {
+            if (typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });
@@ -47,22 +47,24 @@ class Login extends React.Component
                                     <div className="box">
                                          <ErrorComponent error={this.state.error} />
                                         <label className="label">Username</label>
-                                        <p className="control">
+                                        <p className="control has-icon">
                                             <input
                                                 ref='username'
                                                 className="input"
                                                 type="text"
                                                 placeholder="Ex: jsmith" 
                                             />
+                                            <i className="fa fa-user" />
                                         </p>
                                         <label className="label">Password</label>
-                                        <p className="control">
+                                        <p className="control has-icon">
                                             <input
                                                 ref='password'
                                                 className="input"
                                                 type="password"
                                                 placeholder="●●●●●●●"
                                             />
+                                            <i className="fa fa-lock" />
                                         </p>
                                         <hr />
                                         <p className="control">

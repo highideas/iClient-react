@@ -3,132 +3,79 @@ jest.dontMock('components/Area/Area');
 jest.dontMock('components/Error/Error');
 jest.dontMock('react');
 jest.dontMock('axios');
+jest.dontMock('axios-mock-adapter');
+jest.dontMock('services/Visit');
 jest.dontMock('../tests/__mocks__/AreasResponseMock');
 jest.dontMock('enzyme');
 
 
 describe('Test Area', () => {
+    require('../tests/__mocks__/LocalStorageMock');
+
     const React = require('react');
     const Enzyme = require('enzyme');
     const shallow = Enzyme.shallow;
+    let axios = require('axios');
+    let MockAdapter = require('axios-mock-adapter');
     let Visit = require('services/Visit').default;
 
     it('Area should show error message', (done) => {
 
-        let error = {response:{data:{error:"Not Found"}}};
-        let promises = [];
+        let response = {error:"Not Found"};
         let Area;
         let component;
+        let mockAdapter = new MockAdapter(axios);
 
-        promises.push(
-            (() => {
-                Visit.getGroupByArea = jest.genMockFunction().mockImplementation(() => {
-                    return new Promise((resolve, reject) => {
-                        throw error;
-                    });
-                })
-            })()
+        mockAdapter.onGet('http://localhost:3000/api/v1/visit/group/area').reply(404, response);
+
+        Area = require('components/Area/Area').default;
+
+        component = shallow(
+            <Area />
         );
 
-        promises.push(
-            (() => {
-                Area = require('components/Area/Area').default;
-            })()
-        );
-
-        promises.push(
-            (() => {
-                component = shallow(
-                    <Area />
-                );
-            })()
-        );
-
-        Promise.all(promises).then(() => {
-            expect(component.state('error')).toEqual('Not Found');
-
-            let errorComponent = shallow(
-                component.instance().generateError(error.response.data.error)
-            );
-
-            expect(errorComponent.find('div').text()).toEqual('Not Found');
+        setTimeout(() => {
+            expect(component.render().text()).toEqual('Not Found');
             done();
-        }).catch((error) => {
-            console.log(error);
-        });
+        }, 0);
     });
 
     it('Area should show nothing if no data', (done) => {
 
-        let error = {data:{error:"Not Found"}};
-        let promises = [];
         let Area;
         let component;
+        let mockAdapter = new MockAdapter(axios);
 
-        promises.push(
-            (() => {
-                Visit.getGroupByArea = jest.genMockFunction().mockImplementation(() => {
-                    return new Promise((resolve, reject) => {
-                        throw error;
-                    });
-                })
-            })()
+        mockAdapter.onGet('http://localhost:3000/api/v1/visit/group/area').reply(404, {});
+
+        Area = require('components/Area/Area').default;
+
+        component = shallow(
+            <Area />
         );
 
-        promises.push(
-            (() => {
-                Area = require('components/Area/Area').default;
-            })()
-        );
-
-        promises.push(
-            (() => {
-                component = shallow(
-                    <Area />
-                );
-            })()
-        );
-
-        Promise.all(promises).then(() => {
+        setTimeout(() => {
             expect(component.state('error')).toEqual('');
             done();
-        }).catch((error) => {
-            console.log(error);
-        });
+        }, 0);
     });
 
     it('Area should show mocked data', (done) => {
 
-        let response = {data:require('AreasResponseMock').default};
-        let promises = [];
+        let response = require('AreasResponseMock').default;
         let Area;
         let component;
+        let mockAdapter = new MockAdapter(axios);
 
-        promises.push(
-            (() => {
-                Visit.getGroupByArea = jest.genMockFunction().mockImplementation(() => {
-                    return new Promise((resolve, reject) => {
-                        resolve(response);
-                    });
-                })
-            })()
+        mockAdapter.onGet('http://localhost:3000/api/v1/visit/group/area').reply(200, response);
+
+        Area = require('components/Area/Area').default;
+
+        component = shallow(
+            <Area />
         );
 
-        promises.push(
-            (() => {
-                Area = require('components/Area/Area').default;
-            })()
-        );
-
-        promises.push(
-            (() => {
-                component = shallow(
-                    <Area />
-                );
-            })()
-        );
-
-        Promise.all(promises).then(() => {
+        setTimeout(() => {
             expect(
                 shallow(
                     component.state().areas[0]
@@ -140,9 +87,7 @@ describe('Test Area', () => {
                 ).find('.title').at(0).text()
             ).toEqual('South');
             done();
-        }).catch((error) => {
-            console.log(error);
-        });
+        }, 0);
     });
 
 });
