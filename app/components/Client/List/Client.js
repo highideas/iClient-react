@@ -51,7 +51,7 @@ class Client extends React.Component
 
                     <td className="is-icon">
                         <Link to={ `#` } >
-                            <i className="fa fa-check"></i>
+                            <i className="fa fa-calendar-check-o"></i>
                         </Link>
                     </td>
 

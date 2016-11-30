@@ -2,28 +2,32 @@ import axios from 'axios';
 
 const Client = {
 
-    getClients() {
-        let url = [HOST, 'api', 'v1', 'client'];
+    getEntryPoint() {
+        return [ HOST, 'api', 'v1', 'client' ];
+    },
 
-        let config = {
+    getConfig() {
+        return {
             headers: {
                 Authorization : window.localStorage.getItem('token')
             }
         };
-        return axios.get(url.join('/'), config);
+    },
+
+    getClients() {
+        return axios.get(this.getEntryPoint().join('/'), this.getConfig());
     },
 
     getClient(id) {
 
-        let url = [HOST, 'api', 'v1', 'client'];
+        let url = this.getEntryPoint();
         url.push(id);
 
-        let config = {
-            headers: {
-                Authorization : window.localStorage.getItem('token')
-            }
-        };
-        return axios.get(url.join('/'), config);
+        return axios.get(url.join('/'), this.getConfig());
+    },
+
+    save(client) {
+        return axios.post(this.getEntryPoint().join('/'), client, this.getConfig());
     }
 };
 
