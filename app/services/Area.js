@@ -1,15 +1,19 @@
 import axios from 'axios';
 
-const Visit = {
-    getGroupByArea() {
+const Area = {
+
+    getAll() {
+        let url = [HOST, 'api', 'v1', 'area'];
+
         let config = {
             headers: {
                 Authorization : window.localStorage.getItem('token')
             }
         };
-        return axios.get(`${HOST}/api/v1/visit/group/area`, config);
+        return axios.get(url.join('/'), config);
     }
 };
 
-export default Visit;
+export default Area;
+
 
