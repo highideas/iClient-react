@@ -50,22 +50,11 @@ class Client extends React.Component
                     </td>
 
                     <td className="is-icon">
-                        <Link to={ `#` } >
+                        <Link to={ `/visit/${client._id}/` } >
                             <i className="fa fa-calendar-check-o"></i>
                         </Link>
                     </td>
 
-                    <td className="is-icon">
-                        <Link to={ `#` } >
-                            <i className="fa fa-calendar"></i>
-                        </Link>
-                    </td>
-
-                    <td className="is-icon">
-                        <Link to={ `#` } >
-                            <i className="fa fa-close"></i>
-                        </Link>
-                    </td>
                 </tr>
             );
         });
