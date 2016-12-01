@@ -14,6 +14,7 @@ class Visit extends React.Component
         this.state = {
             error : '',
             client : null,
+            visit_date: new Date(),
             visit : {}
         };
     }
@@ -23,7 +24,8 @@ class Visit extends React.Component
             this.setState({client: response.data.client.shift()});
         }).catch((error) => {
             this.setState({error: 'Error Found: Trying get client'});
-            if (typeof error.response.data.error !== 'undefined') {
+            let validResponse = typeof error.response.data !== 'undefined';
+            if (validResponse && typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });
@@ -34,7 +36,7 @@ class Visit extends React.Component
 
         let visit = {
             client : this.state.client,
-            visit_date: new Date(),
+            visit_date: this.state.visit_date,
         };
 
         for (let i in this.refs) {
@@ -102,7 +104,7 @@ class Visit extends React.Component
                                                     required="required"
                                                 />
                                             </p>
-                                            <button className="button is-primary" >Cadastrar</button>
+                                            <button className="button is-primary" >Save</button>
                                         </div>
                                     </div>
                                     <div className="card-image">

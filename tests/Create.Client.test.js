@@ -303,7 +303,7 @@ describe('Test Create Client', () => {
         }, 0);
     });
 
-    it('Client should show default error message', () => {
+    it('Client should show default error message', (done) => {
 
         let response = {};
         let Client;
@@ -321,9 +321,13 @@ describe('Test Create Client', () => {
 
         setTimeout(() => {
 
-            component.update();
-            expect(component.render().text()).toEqual('Error Found: Trying get area');
-            done();
+            try {
+                component.update();
+                expect(component.render().text()).toEqual('Error Found: Trying get areas');
+                done();
+            } catch(e) {
+                console.log(e);
+            }
         }, 0);
     });
 
