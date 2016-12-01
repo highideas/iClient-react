@@ -17,7 +17,7 @@ class Client extends React.Component
     }
 
     getClient(id) {
-        ClientService.getClient(id).then((response) => {
+        ClientService.find(id).then((response) => {
             this.setState({client: response.data.client.shift()});
         }).catch((error) => {
             this.setState({error: 'Error Found: Trying get client'});
