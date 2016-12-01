@@ -20,7 +20,8 @@ class Area extends React.Component
             this.setState({areas: response.data.areas});
         }).catch((error) => {
             this.setState({error: 'Error Found: Trying get areas'});
-            if (typeof error.response.data.error !== 'undefined') {
+            let isValidResponse = typeof error.response.data !== 'undefined';
+            if (isValidResponse && typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });
@@ -34,10 +35,12 @@ class Area extends React.Component
             return <div>Loading...</div>;
         }
 
+        const select = Object.assign({}, this.props.select);
+
         return (
             <p className="control has-icon">
                 <span className="select">
-                    <select {...this.props} >
+                    <select {...select} >
                         {
                             this.state.areas.map((area, key) => (
                                 <option value={ area._id } key={ key }>{ area._id}</option>
