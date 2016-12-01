@@ -46,7 +46,7 @@ class Visit extends React.Component
         this.setState({visit: visit});
 
         VisitService.save(visit).then((response) => {
-            this.context.router.push("/area");
+            this.context.router.push("/clients");
         }).catch((error) => {
 
             this.setState({error: 'Error trying create visit'});
@@ -104,7 +104,13 @@ class Visit extends React.Component
                                                     required="required"
                                                 />
                                             </p>
-                                            <button className="button is-primary" >Save</button>
+                                            <hr />
+                                            <p className="control">
+                                                <button className="button is-primary">Save</button>
+                                                <Link to='/clients' className="button">
+                                                    <span>Cancel</span>
+                                                </Link>
+                                            </p>
                                         </div>
                                     </div>
                                     <div className="card-image">

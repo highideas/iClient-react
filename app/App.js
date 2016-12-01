@@ -11,6 +11,7 @@ import ListClientComponent from 'components/Client/List/Client'
 import ProfileClientComponent from 'components/Client/Profile/Client'
 import CreateClientComponent from 'components/Client/Create/Client'
 import CreateVisitComponent from 'components/Visit/Create/Visit'
+import CreateAreaComponent from 'components/Area/Create/Area'
 
 ReactDOM.render(
     <Router history={hashHistory} >
@@ -19,10 +20,12 @@ ReactDOM.render(
             <Route path="clients" component={ListClientComponent} />
             <Route path="client" component={ CreateClientComponent } />
             <Route path="client/:id" component={ProfileClientComponent} />
-            <Route path="area" component={AreaComponent} />
+            <Route path="areas" component={AreaComponent} />
+            <Route path="area" component={CreateAreaComponent} />
             <Route path="visit/:clientId/" component={CreateVisitComponent} />
             <Route path="visit/:id" component={AreaComponent} />
         </Route>
     </Router>,
     document.getElementById('app')
 );
+

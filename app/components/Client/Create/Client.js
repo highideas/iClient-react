@@ -161,7 +161,7 @@ class Client extends React.Component
                                 </p>
                                 <hr />
                                 <p className="control">
-                                    <button className="button is-primary">Register</button>
+                                    <button className="button is-primary">Save</button>
                                     <Link to='/clients' className="button">
                                         <span>Cancel</span>
                                     </Link>

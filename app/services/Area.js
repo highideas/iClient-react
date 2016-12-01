@@ -2,15 +2,24 @@ import axios from 'axios';
 
 const Area = {
 
-    getAll() {
-        let url = [HOST, 'api', 'v1', 'area'];
+    getEntryPoint() {
+        return [ HOST, 'api', 'v1', 'area' ];
+    },
 
-        let config = {
+    getConfig() {
+        return {
             headers: {
                 Authorization : window.localStorage.getItem('token')
             }
         };
-        return axios.get(url.join('/'), config);
+    },
+
+    getAll() {
+        return axios.get(this.getEntryPoint().join('/'), this.getConfig());
+    },
+
+    save(data) {
+        return axios.post(this.getEntryPoint().join('/'), data, this.getConfig());
     }
 };
 

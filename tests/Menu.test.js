@@ -21,7 +21,7 @@ describe('Test Menu', () => {
         let expectedLinks = [
             ['/', 'Home'],
             ['/clients', 'Clients'],
-            ['/area', 'Areas'],
+            ['/areas', 'Areas'],
         ];
 
         expect(component.state().links).toEqual(expectedLinks);

@@ -57,7 +57,7 @@ describe('Test Create Visit', () => {
         let context = {
             router: {
                 push: (arg) => {
-                    expect(arg).toEqual('/area');
+                    expect(arg).toEqual('/clients');
                 }
             }
         };
@@ -110,7 +110,7 @@ describe('Test Create Visit', () => {
         let context = {
             router: {
                 push: (arg) => {
-                    expect(arg).toEqual('/area');
+                    expect(arg).toEqual('/clients');
                 }
             }
         };
@@ -163,7 +163,7 @@ describe('Test Create Visit', () => {
         let context = {
             router: {
                 push: (arg) => {
-                    expect(arg).toEqual('/area');
+                    expect(arg).toEqual('/clients');
                 }
             }
         };
@@ -224,7 +224,7 @@ describe('Test Create Visit', () => {
                 expect(component.find('.content p').at(0).text()).toEqual('Name: Test');
                 expect(component.find('.content p').at(1).text()).toEqual('Address: fdajla');
                 expect(component.find('.content p').at(2).text()).toEqual('City: fdajlkj');
-                expect(component.find('.button').text()).toEqual('Save');
+                expect(component.find('.button').at(0).text()).toEqual('Save');
                 done();
             } catch(e) {
                 console.log(e);
