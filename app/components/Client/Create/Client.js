@@ -10,7 +10,6 @@ class Client extends React.Component
 {
     constructor(props, context) {
         super(props, context);
-        super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             error : '',
