@@ -21,6 +21,7 @@ class Client extends React.Component
             this.setState({client: response.data.client.shift()});
         }).catch((error) => {
             this.setState({error: 'Error Found: Trying get client'});
+            let isValidResponse = typeof error.response.data !== 'undefined'
             if (typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
@@ -71,32 +72,20 @@ class Client extends React.Component
                     <nav className="nav">
                         <div className="nav-center nav-menu is-active">
                             <span className="nav-item">
-                                <a className="button" >
+                                <Link to={ `/visit/${this.state.client._id}/` } className='button'>
                                     <span className="icon">
-                                        <i className="fa fa-check"></i>
+                                        <i className="fa fa-calendar-check-o"></i>
                                     </span>
                                     <span>Visited</span>
-                                </a>
-                                <a className="button" href="#">
+                                </Link>
+                            </span>
+                            <span className="nav-item">
+                                <Link to={ `/client/${this.state.client._id}/update` } className='button'>
                                     <span className="icon">
                                         <i className="fa fa-pencil"></i>
                                     </span>
                                     <span>Update</span>
-                                </a>
-                            </span>
-                            <span className="nav-item">
-                                <a className="button" >
-                                    <span className="icon">
-                                        <i className="fa fa-calendar"></i>
-                                    </span>
-                                    <span>Schedule</span>
-                                </a>
-                                <a className="button is-danger" href="#">
-                                    <span className="icon">
-                                        <i className="fa fa-close"></i>
-                                    </span>
-                                    <span>Delete</span>
-                                </a>
+                                </Link>
                             </span>
                         </div>
                     </nav>

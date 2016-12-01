@@ -4,7 +4,6 @@ import { Link, Router } from 'react-router'
 import Error from 'components/Error/Error'
 import VisitService from 'services/Visit'
 import ClientService from 'services/Client'
-import styles from 'components/Client/Create/styles.css'
 
 class Visit extends React.Component
 {
@@ -73,7 +72,7 @@ class Visit extends React.Component
                 <div className="columns is-vcentered">
                     <div className="column is-4 is-offset-4">
                         <h1 className="title">
-                            Create a Visit
+                            Create Visit
                         </h1>
                         <form onSubmit={this.handleSubmit}>
                             <center>
