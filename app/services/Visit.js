@@ -1,13 +1,27 @@
 import axios from 'axios';
 
 const Visit = {
-    getGroupByArea() {
-        let config = {
+
+    getEntryPoint() {
+        return [ HOST, 'api', 'v1', 'visit' ];
+    },
+
+    getConfig() {
+        return {
             headers: {
                 Authorization : window.localStorage.getItem('token')
             }
         };
-        return axios.get(`${HOST}/api/v1/visit/group/area`, config);
+    },
+
+    getGroupByArea() {
+        let url = this.getEntryPoint();
+        url.push('group', 'area');
+        return axios.get(url.join('/'), this.getConfig());
+    },
+
+    save(data) {
+        return axios.post(this.getEntryPoint().join('/'), data, this.getConfig());
     }
 };
 

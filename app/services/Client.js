@@ -18,7 +18,7 @@ const Client = {
         return axios.get(this.getEntryPoint().join('/'), this.getConfig());
     },
 
-    getClient(id) {
+    find(id) {
 
         let url = this.getEntryPoint();
         url.push(id);
