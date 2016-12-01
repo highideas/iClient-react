@@ -29,8 +29,9 @@ class Client extends React.Component
             client.area = client.area._id
             this.setState({client: client})
         }).catch((error) => {
+            this.setState({error: 'Error Found: Trying get client ' + id});
             let isValidResponse = typeof error.response.data !== 'undefined'
-            if (typeof error.response.data.error !== 'undefined') {
+            if (isValidResponse && typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });
@@ -67,12 +68,16 @@ class Client extends React.Component
     handleSubmit(event) {
 
         let client = this.formatFormData();
+        let method;
+        if (typeof client._id !== 'undefined') {
+            method = 'put';
+        }
 
-        ClientService.save(client).then((response) => {
+        ClientService.save(client, method).then((response) => {
             this.context.router.push("/clients");
         }).catch((error) => {
 
-            this.setState({error: 'Error trying create client'});
+            this.setState({error: 'Error trying save client'});
 
             let responseValid = typeof error.response.data !== 'undefined';
 
@@ -96,7 +101,7 @@ class Client extends React.Component
                 <div className="columns is-vcentered">
                     <div className="column is-4 is-offset-4">
                         <h1 className="title">
-                            Register a Client
+                            Save Client
                         </h1>
                         <form onSubmit={this.handleSubmit}>
                             <div className="box">

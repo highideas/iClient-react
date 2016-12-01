@@ -26,8 +26,8 @@ const Client = {
         return axios.get(url.join('/'), this.getConfig());
     },
 
-    save(client) {
-        if (typeof client.id !== 'undefined') {
+    save(client, method = 'post') {
+        if (method == 'put') {
             return axios.put(this.getEntryPoint().join('/'), client, this.getConfig());
         }
         return axios.post(this.getEntryPoint().join('/'), client, this.getConfig());

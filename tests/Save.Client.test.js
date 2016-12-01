@@ -24,7 +24,7 @@ describe('Test Save Client', () => {
     let axios = require('axios');
     let MockAdapter = require('axios-mock-adapter');
 
-    it('Client should show error when fails to create client', (done) => {
+    it('Client should show error when fails to save client', (done) => {
 
         let Client;
         let component;
@@ -83,7 +83,7 @@ describe('Test Save Client', () => {
         setTimeout(() => {
 
             try {
-                expect(component.render().text()).toEqual('Error trying create client');
+                expect(component.render().text()).toEqual('Error trying save client');
                 done();
             } catch (e) {
                 console.log(e);
@@ -92,7 +92,7 @@ describe('Test Save Client', () => {
     });
 
 
-    it('Client should show error when fails to create client', (done) => {
+    it('Client should show error when fails to save client', (done) => {
 
         let Client;
         let component;
@@ -121,7 +121,7 @@ describe('Test Save Client', () => {
 
         mockAdapter
             .onGet(HOST + '/api/v1/area').reply(200, response)
-            .onPost(HOST + '/api/v1/client').reply(503, {error : 'Error create client'} );
+            .onPost(HOST + '/api/v1/client').reply(503, {error : 'Error save client'} );
 
         Client = require('components/Client/Save/Client').default;
 
@@ -151,7 +151,7 @@ describe('Test Save Client', () => {
         setTimeout(() => {
 
             try {
-                expect(component.render().text()).toEqual('Error create client');
+                expect(component.render().text()).toEqual('Error save client');
                 done();
             } catch (e) {
                 console.log(e);
@@ -336,5 +336,255 @@ describe('Test Save Client', () => {
         }, 0);
     });
 
+    it('Client should show client loaded', (done) => {
+
+        let Client;
+        let component;
+        let mockAdapter = new MockAdapter(axios);
+        let response = {
+            areas : [
+                {
+                    _id : "Center",
+                    parent : "",
+                    __v : 0,
+                    ancestors : []
+                },
+                {
+                    _id : "South",
+                    parent : "",
+                    __v : 0,
+                    ancestors : []
+                }
+            ]
+        };
+        let clientResponse = {
+            client : [
+                {
+                    _id : "58407735f7b50400132d64e7",
+                    updatedAt : "2016-12-01T19:17:09.262Z",
+                    createdAt : "2016-12-01T19:17:09.262Z",
+                    name : "lfdjal",
+                    address : "fdjaljfdal",
+                    city : "jfladkjl", 
+                    area : {
+                        _id : "Test",
+                        parent : "South",
+                        __v : 0,
+                        ancestors : []
+                    },
+                    frequency : 11, 
+                    ability : 300,
+                    __v : 0
+                }
+            ]
+        };
+        let expectedClientState = Object.assign({}, ...clientResponse.client);
+        expectedClientState.updatedAt = '';
+        expectedClientState.createdAt = '';
+        expectedClientState.area = 'Test';
+
+        mockAdapter
+            .onGet(HOST + '/api/v1/area').reply(200, response)
+            .onGet(HOST + '/api/v1/client/1').reply(200, clientResponse)
+
+        Client = require('components/Client/Save/Client').default;
+
+        component = shallow(
+            <Client params={ { id: 1} }/>,
+            { context }
+        );
+
+        setTimeout(() => {
+
+            try {
+                component.update();
+                expect(component.state().client).toEqual(expectedClientState);
+                expect(component.find('input').at(0).props().value).toEqual('lfdjal');
+                expect(component.find('input').at(1).props().value).toEqual(undefined);
+                expect(component.find('input').at(3).props().value).toEqual('jfladkjl');
+                expect(component.find('input').at(4).props().value).toEqual(11);
+                expect(component.find('input').at(5).props().value).toEqual(300);
+                done();
+            } catch(e) {
+                console.log(e);
+            }
+        }, 0);
+    });
+
+    it('Client should show error message', (done) => {
+
+        let Client;
+        let component;
+        let mockAdapter = new MockAdapter(axios);
+        let response = {
+            areas : [
+                {
+                    _id : "Center",
+                    parent : "",
+                    __v : 0,
+                    ancestors : []
+                },
+                {
+                    _id : "South",
+                    parent : "",
+                    __v : 0,
+                    ancestors : []
+                }
+            ]
+        };
+
+        mockAdapter
+            .onGet(HOST + '/api/v1/area').reply(200, response)
+            .onGet(HOST + '/api/v1/client/1').reply(503, { error : 'Error on server'})
+
+        Client = require('components/Client/Save/Client').default;
+
+        component = shallow(
+            <Client params={ { id: 1} }/>,
+            { context }
+        );
+
+        setTimeout(() => {
+
+            try {
+                component.update();
+                expect(component.render().text()).toEqual('Error on server');
+                done();
+            } catch(e) {
+                console.log(e);
+            }
+        }, 0);
+    });
+
+    it('Client should show default error message when error to find client', (done) => {
+
+        let Client;
+        let component;
+        let mockAdapter = new MockAdapter(axios);
+        let response = {
+            areas : [
+                {
+                    _id : "Center",
+                    parent : "",
+                    __v : 0,
+                    ancestors : []
+                },
+                {
+                    _id : "South",
+                    parent : "",
+                    __v : 0,
+                    ancestors : []
+                }
+            ]
+        };
+
+        mockAdapter
+            .onGet(HOST + '/api/v1/area').reply(200, response)
+            .onGet(HOST + '/api/v1/client/1').reply(503);
+
+        Client = require('components/Client/Save/Client').default;
+
+        component = shallow(
+            <Client params={ { id: 1} }/>,
+            { context }
+        );
+
+        setTimeout(() => {
+
+            try {
+                component.update();
+                expect(component.render().text()).toEqual('Error Found: Trying get client 1');
+                done();
+            } catch(e) {
+                console.log(e);
+            }
+        }, 0);
+    });
+
+    it('Client should update client', (done) => {
+
+        let Client;
+        let component;
+        let selectArea;
+        let mockAdapter = new MockAdapter(axios);
+        let response = {
+            areas : [
+                {
+                    _id : "Center",
+                    parent : "",
+                    __v : 0,
+                    ancestors : []
+                },
+                {
+                    _id : "South",
+                    parent : "",
+                    __v : 0,
+                    ancestors : []
+                }
+            ]
+        };
+        let clientResponse = {
+            client : [
+                {
+                    _id : "58407735f7b50400132d64e7",
+                    updatedAt : "2016-12-01T19:17:09.262Z",
+                    createdAt : "2016-12-01T19:17:09.262Z",
+                    name : "lfdjal",
+                    address : "fdjaljfdal",
+                    city : "jfladkjl", 
+                    area : {
+                        _id : "Test",
+                        parent : "South",
+                        __v : 0,
+                        ancestors : []
+                    },
+                    frequency : 11, 
+                    ability : 300,
+                    __v : 0
+                }
+            ]
+        };
+        let expectedClientState = Object.assign({}, ...clientResponse.client);
+        expectedClientState.updatedAt = '';
+        expectedClientState.createdAt = '';
+        expectedClientState.area = {
+            _id : "Center",
+            parent : "",
+            __v : 0,
+            ancestors : []
+        };
+
+        mockAdapter
+            .onGet(HOST + '/api/v1/area').reply(200, response)
+            .onGet(HOST + '/api/v1/client/1').reply(200, clientResponse)
+            .onPost(HOST + '/api/v1/client').reply(403)
+            .onPut(HOST + '/api/v1/client').reply(204)
+
+        Client = require('components/Client/Save/Client').default;
+
+        component = mount(
+            <Client params={ { id: 1} }/>,
+            { context }
+        );
+
+        setTimeout(() => {
+
+            try {
+
+                selectArea = component.find('select')
+                selectArea.node.value = 'Center'
+                selectArea.simulate('change', selectArea);
+
+                component.find('form').simulate('submit', { target: component.find('form').get(0) });
+
+                component.update();
+                expect(component.state().error).toEqual('');
+                expect(component.state().client).toEqual(expectedClientState);
+                done();
+            } catch(e) {
+                console.log(e);
+            }
+        }, 0);
+    });
 });
 
