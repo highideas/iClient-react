@@ -194,7 +194,12 @@ describe('Test Create Client', () => {
             city : 'city',
             frequency : 'frequency',
             ability : 'ability',
-            area : 'Center',
+            area : {
+                _id : "Center",
+                parent : "",
+                __v : 0,
+                ancestors : []
+            },
         };
 
         mockAdapter

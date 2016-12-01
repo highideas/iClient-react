@@ -11,6 +11,7 @@ class Client extends React.Component
     constructor(props, context) {
         super(props, context);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.formatFormData = this.formatFormData.bind(this);
         this.state = {
             error : '',
             areas : null,
@@ -30,13 +31,20 @@ class Client extends React.Component
         });
     }
 
+    formatFormData(data) {
+        let client = {}
+        for (let i in data) {
+            client[i] = data[i].value;
+        }
+
+        client.area = this.state.areas.filter( (area) => client['area'] == area._id ).shift();
+        return client;
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
-        let client = {}
-        for (let i in this.refs) {
-            client[i] = this.refs[i].value;
-        }
+        let client = this.formatFormData(this.refs);
 
         this.setState({client: client});
 
