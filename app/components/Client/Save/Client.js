@@ -68,12 +68,12 @@ class Client extends React.Component
     handleSubmit(event) {
 
         let client = this.formatFormData();
-        let method;
+        let id;
         if (typeof client._id !== 'undefined') {
-            method = 'put';
+            id = client._id;
         }
 
-        ClientService.save(client, method).then((response) => {
+        ClientService.save(client, id).then((response) => {
             this.context.router.push("/clients");
         }).catch((error) => {
 
