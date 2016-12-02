@@ -27,6 +27,9 @@ const Client = {
     },
 
     save(client) {
+        if (typeof client.id !== 'undefined') {
+            return axios.put(this.getEntryPoint().join('/'), client, this.getConfig());
+        }
         return axios.post(this.getEntryPoint().join('/'), client, this.getConfig());
     }
 };

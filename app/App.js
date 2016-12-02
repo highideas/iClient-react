@@ -19,6 +19,7 @@ ReactDOM.render(
             <IndexRoute component={HomeComponent} />
             <Route path="clients" component={ListClientComponent} />
             <Route path="client" component={ CreateClientComponent } />
+            <Route path="client/:id/update" component={ CreateClientComponent } />
             <Route path="client/:id" component={ProfileClientComponent} />
             <Route path="areas" component={AreaComponent} />
             <Route path="area" component={CreateAreaComponent} />

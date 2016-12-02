@@ -12,6 +12,8 @@ class Client extends React.Component
         super(props, context);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.formatFormData = this.formatFormData.bind(this);
+        this.loadClient = this.loadClient.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.state = {
             error : '',
             areas : null,
@@ -19,7 +21,26 @@ class Client extends React.Component
         };
     }
 
+    loadClient(id) {
+        ClientService.find(id).then((response) => {
+            let client =  response.data.client.shift();
+            client.createdAt = ''
+            client.updatedAt = ''
+            client.area = client.area._id
+            this.setState({client: client})
+        }).catch((error) => {
+            let isValidResponse = typeof error.response.data !== 'undefined'
+            if (typeof error.response.data.error !== 'undefined') {
+                this.setState({error: error.response.data.error});
+            }
+        });
+    }
+
     componentWillMount() {
+
+        if (typeof this.props.params !== 'undefined' && typeof this.props.params.id !== 'undefined') {
+            this.loadClient(this.props.params.id);
+        }
 
         AreaService.getAll().then((response) => {
             this.setState({areas: response.data.areas});
@@ -31,22 +52,21 @@ class Client extends React.Component
         });
     }
 
-    formatFormData(data) {
-        let client = {}
-        for (let i in data) {
-            client[i] = data[i].value;
-        }
+    handleChange(event) {
+        let client = this.state.client;
+        client[event.target.name] = event.target.value;
+        this.setState({client : client});
+    }
 
-        client.area = this.state.areas.filter( (area) => client['area'] == area._id ).shift();
+    formatFormData() {
+        let client = this.state.client;
+        client.area = this.state.areas.filter( (area) => client.area == area._id ).shift();
         return client;
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    handleSubmit(event) {
 
-        let client = this.formatFormData(this.refs);
-
-        this.setState({client: client});
+        let client = this.formatFormData();
 
         ClientService.save(client).then((response) => {
             this.context.router.push("/clients");
@@ -60,6 +80,7 @@ class Client extends React.Component
                 this.setState({error: error.response.data.error});
             }
         });
+        event.preventDefault();
     }
 
     render() {
@@ -83,22 +104,25 @@ class Client extends React.Component
                                 <p className="control has-icon">
                                     <input
                                         required='required'
-                                        ref='name'
-                                        className="input marco"
+                                        className="input"
                                         type="text"
                                         placeholder="John Smith"
+                                        name='name'
+                                        value={ this.state.client.name }
+                                        onChange={this.handleChange}
                                     />
                                     <i className="fa fa-id-card-o" aria-hidden="true" />
                                 </p>
                                 <label className="label">Phone</label>
                                 <p className="control has-icon">
                                     <input
-                                        required='required'
                                         pattern="[\(]\d{2}[\)]\d{4,5}[\-]\d{4}"
-                                        ref='phone'
                                         className="input"
                                         type="text"
                                         placeholder="(21)99999-00000"
+                                        name='phone'
+                                        value={ this.state.client.phone }
+                                        onChange={this.handleChange}
                                     />
                                     <i className="fa fa-phone" aria-hidden="true" />
                                 </p>
@@ -106,10 +130,12 @@ class Client extends React.Component
                                 <p className="control has-icon">
                                     <input
                                         required='required'
-                                        ref='address'
                                         className="input"
                                         type="text"
                                         placeholder="Street 32 - Nº 23"
+                                        name='address'
+                                        value={ this.state.client.address }
+                                        onChange={this.handleChange}
                                     />
                                     <i className="fa fa-address-card" aria-hidden="true" />
                                 </p>
@@ -117,17 +143,23 @@ class Client extends React.Component
                                 <p className="control has-icon">
                                     <input
                                         required='required'
-                                        ref='city'
                                         className="input"
                                         type="text"
                                         placeholder="London"
+                                        name='city'
+                                        value={ this.state.client.city }
+                                        onChange={this.handleChange}
                                     />
                                     <i className="fa fa-address-book" aria-hidden="true" />
                                 </p>
                                 <label className="label">Area</label>
                                 <p className="control has-icon">
                                     <span className="select">
-                                        <select ref='area' >
+                                        <select
+                                            name='area'
+                                            value={ this.state.client.area }
+                                            onChange={this.handleChange}
+                                        >
                                             {
                                                 this.state.areas.map((area, key) => (
                                                     <option value={ area._id } key={ key }>{ area._id}</option>
@@ -141,10 +173,12 @@ class Client extends React.Component
                                 <p className="control has-icon">
                                     <input
                                         required='required'
-                                        ref='frequency'
                                         className="input"
                                         type="number"
                                         placeholder="10"
+                                        name='frequency'
+                                        value={ this.state.client.frequency }
+                                        onChange={this.handleChange}
                                     />
                                     <i className="fa fa-refresh" aria-hidden="true" />
                                 </p>
@@ -152,10 +186,12 @@ class Client extends React.Component
                                 <p className="control has-icon">
                                     <input
                                         required='required'
-                                        ref='ability'
                                         className="input"
                                         type="number"
                                         placeholder="200"
+                                        name='ability'
+                                        value={ this.state.client.ability }
+                                        onChange={this.handleChange}
                                     />
                                     <i className="fa fa-shopping-basket" aria-hidden="true" />
                                 </p>

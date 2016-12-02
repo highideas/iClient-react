@@ -163,6 +163,7 @@ describe('Test Create Client', () => {
 
         let Client;
         let component;
+        let selectArea;
         let mockAdapter = new MockAdapter(axios);
         let context = {
             router: {
@@ -225,6 +226,10 @@ describe('Test Create Client', () => {
                     frequency : component.find('input').at(4),
                     ability : component.find('input').at(5),
                 }
+
+                selectArea = component.find('select')
+                selectArea.node.value = 'Center'
+                selectArea.simulate('change', selectArea);
 
                 for (let input in inputs) {
                     inputs[input].node.value = input;
