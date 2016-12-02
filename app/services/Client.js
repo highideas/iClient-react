@@ -26,7 +26,12 @@ const Client = {
         return axios.get(url.join('/'), this.getConfig());
     },
 
-    save(client) {
+    save(client, id = undefined) {
+        if (id !== undefined) {
+            let url = this.getEntryPoint();
+            url.push(id);
+            return axios.put(url.join('/'), client, this.getConfig());
+        }
         return axios.post(this.getEntryPoint().join('/'), client, this.getConfig());
     }
 };
