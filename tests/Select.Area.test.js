@@ -6,7 +6,6 @@ jest.dontMock('axios');
 jest.dontMock('axios-mock-adapter');
 jest.dontMock('enzyme');
 jest.dontMock('services/Area');
-jest.dontMock('services/Client');
 
 describe('Test Select Area', () => {
     require('../tests/__mocks__/LocalStorageMock');

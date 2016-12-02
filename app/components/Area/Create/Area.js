@@ -17,18 +17,6 @@ class Area extends React.Component
         };
     }
 
-    componentWillMount() {
-
-        AreaService.getAll().then((response) => {
-            this.setState({areas: response.data.areas});
-        }).catch((error) => {
-            this.setState({error: 'Error Found: Trying get areas'});
-            if (typeof error.response.data.error !== 'undefined') {
-                this.setState({error: error.response.data.error});
-            }
-        });
-    }
-
     handleSubmit(e) {
         e.preventDefault();
 
@@ -59,16 +47,12 @@ class Area extends React.Component
             return (<Error error={this.state.error} />);
         }
 
-        if (!this.state.areas) {
-            return <div>Loading...</div>;
-        }
-
         return (
             <div className="container">
                 <div className="columns is-vcentered">
                     <div className="column is-4 is-offset-4">
                         <h1 className="title">
-                            Create a Area
+                            Create Area
                         </h1>
                         <form onSubmit={this.handleSubmit}>
                             <div className="box">
@@ -85,7 +69,7 @@ class Area extends React.Component
                                 </p>
                                 <label className="label">Parent</label>
                                 <AreaSelect
-                                    name='parent'
+                                    select={ { name : 'parent' } }
                                 />
                                 <hr />
                                 <p className="control">
