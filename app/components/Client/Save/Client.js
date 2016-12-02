@@ -4,7 +4,7 @@ import { Link, Router } from 'react-router'
 import Error from 'components/Error/Error'
 import AreaService from 'services/Area'
 import ClientService from 'services/Client'
-import styles from 'components/Client/Create/styles.css'
+import styles from 'components/Client/Save/styles.css'
 
 class Client extends React.Component
 {

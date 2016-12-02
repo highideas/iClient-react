@@ -1,5 +1,5 @@
 jest.enableAutomock();
-jest.dontMock('components/Client/Create/Client');
+jest.dontMock('components/Client/Save/Client');
 jest.dontMock('components/Error/Error');
 jest.dontMock('react');
 jest.dontMock('axios');
@@ -8,7 +8,7 @@ jest.dontMock('enzyme');
 jest.dontMock('services/Area');
 jest.dontMock('services/Client');
 
-describe('Test Create Client', () => {
+describe('Test Save Client', () => {
     require('../tests/__mocks__/LocalStorageMock');
 
     const React = require('react');
@@ -55,7 +55,7 @@ describe('Test Create Client', () => {
             .onGet(HOST + '/api/v1/area').reply(200, response)
             .onPost(HOST + '/api/v1/client').reply(503);
 
-        Client = require('components/Client/Create/Client').default;
+        Client = require('components/Client/Save/Client').default;
 
         component = mount(
             <Client />,
@@ -123,7 +123,7 @@ describe('Test Create Client', () => {
             .onGet(HOST + '/api/v1/area').reply(200, response)
             .onPost(HOST + '/api/v1/client').reply(503, {error : 'Error create client'} );
 
-        Client = require('components/Client/Create/Client').default;
+        Client = require('components/Client/Save/Client').default;
 
         component = mount(
             <Client />,
@@ -207,7 +207,7 @@ describe('Test Create Client', () => {
             .onGet(HOST + '/api/v1/area').reply(200, response)
             .onPost(HOST + '/api/v1/client').reply(201);
 
-        Client = require('components/Client/Create/Client').default;
+        Client = require('components/Client/Save/Client').default;
 
         component = mount(
             <Client />,
@@ -269,7 +269,7 @@ describe('Test Create Client', () => {
 
         mockAdapter.onGet(HOST + '/api/v1/area').reply(200, response);
 
-        Client = require('components/Client/Create/Client').default;
+        Client = require('components/Client/Save/Client').default;
 
         component = shallow(
             <Client />,
@@ -293,7 +293,7 @@ describe('Test Create Client', () => {
 
         mockAdapter.onGet(HOST + '/api/v1/area').reply(404, response);
 
-        Client = require('components/Client/Create/Client').default;
+        Client = require('components/Client/Save/Client').default;
 
         component = shallow(
             <Client />,
@@ -317,7 +317,7 @@ describe('Test Create Client', () => {
 
         mockAdapter.onGet(HOST + '/api/v1/area').reply(503, response);
 
-        Client = require('components/Client/Create/Client').default;
+        Client = require('components/Client/Save/Client').default;
 
         component = shallow(
             <Client />,

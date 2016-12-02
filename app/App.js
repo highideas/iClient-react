@@ -9,7 +9,7 @@ import HomeComponent from 'components/Home/Home'
 import AreaComponent from 'components/Area/Area'
 import ListClientComponent from 'components/Client/List/Client'
 import ProfileClientComponent from 'components/Client/Profile/Client'
-import CreateClientComponent from 'components/Client/Create/Client'
+import SaveClientComponent from 'components/Client/Save/Client'
 import CreateVisitComponent from 'components/Visit/Create/Visit'
 import CreateAreaComponent from 'components/Area/Create/Area'
 
@@ -18,8 +18,8 @@ ReactDOM.render(
         <Route path="/" component={iClientComponent} >
             <IndexRoute component={HomeComponent} />
             <Route path="clients" component={ListClientComponent} />
-            <Route path="client" component={ CreateClientComponent } />
-            <Route path="client/:id/update" component={ CreateClientComponent } />
+            <Route path="client" component={ SaveClientComponent } />
+            <Route path="client/:id/update" component={ SaveClientComponent } />
             <Route path="client/:id" component={ProfileClientComponent} />
             <Route path="areas" component={AreaComponent} />
             <Route path="area" component={CreateAreaComponent} />
