@@ -50,32 +50,38 @@ class Client extends React.Component
                     </td>
 
                     <td className="is-icon">
-                        <Link to={ `#` } >
-                            <i className="fa fa-check"></i>
+                        <Link to={ `/visit/${client._id}/` } >
+                            <i className="fa fa-calendar-check-o"></i>
                         </Link>
                     </td>
 
-                    <td className="is-icon">
-                        <Link to={ `#` } >
-                            <i className="fa fa-calendar"></i>
-                        </Link>
-                    </td>
-
-                    <td className="is-icon">
-                        <Link to={ `#` } >
-                            <i className="fa fa-close"></i>
-                        </Link>
-                    </td>
                 </tr>
             );
         });
 
         return (
-                <table className="table">
-                    <tbody>
-                        { clientList }
-                    </tbody>
-                </table>
+            <section className="">
+                <div className="container hello">
+                    <div className="level header">
+                        <div className="level-left">
+                            <h2 className="title is-2">iClient</h2>
+                        </div>
+                        <div className="level-right">
+                            <Link to='/client' className="button is-info is-medium">
+                                <span className="icon">
+                                    <i className="fa fa-plus"></i>
+                                </span>
+                                <span>New Client</span>
+                            </Link>
+                        </div>
+                    </div>
+                    <table className="table">
+                        <tbody>
+                            { clientList }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         );
     }
 }

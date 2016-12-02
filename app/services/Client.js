@@ -1,31 +1,33 @@
 import axios from 'axios';
 
-import { HOST } from 'constants/Server';
-
 const Client = {
 
-    getClients() {
-        let url = [HOST, 'api', 'v1', 'client'];
-
-        let config = {
-            headers: {
-                Authorization : window.localStorage.getItem('token')
-            }
-        };
-        return axios.get(url.join('/'), config);
+    getEntryPoint() {
+        return [ HOST, 'api', 'v1', 'client' ];
     },
 
-    getClient(id) {
-
-        let url = [HOST, 'api', 'v1', 'client'];
-        url.push(id);
-
-        let config = {
+    getConfig() {
+        return {
             headers: {
                 Authorization : window.localStorage.getItem('token')
             }
         };
-        return axios.get(url.join('/'), config);
+    },
+
+    getClients() {
+        return axios.get(this.getEntryPoint().join('/'), this.getConfig());
+    },
+
+    find(id) {
+
+        let url = this.getEntryPoint();
+        url.push(id);
+
+        return axios.get(url.join('/'), this.getConfig());
+    },
+
+    save(client) {
+        return axios.post(this.getEntryPoint().join('/'), client, this.getConfig());
     }
 };
 

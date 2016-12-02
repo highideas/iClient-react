@@ -13,8 +13,8 @@ class Menu extends React.Component{
         this.state = {
             links: [
                 [ '/', 'Home'],
-                ['/client', 'Client'],
-                ['/area', 'Area']
+                ['/clients', 'Clients'],
+                ['/areas', 'Areas']
             ]
         };
     }

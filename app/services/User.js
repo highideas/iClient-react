@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { HOST } from 'constants/Server';
 
 const User = {
     login(username, password) {

@@ -8,7 +8,6 @@ jest.dontMock('services/Visit');
 jest.dontMock('../tests/__mocks__/AreasResponseMock');
 jest.dontMock('enzyme');
 
-
 describe('Test Area', () => {
     require('../tests/__mocks__/LocalStorageMock');
 
@@ -26,7 +25,7 @@ describe('Test Area', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/visit/group/area').reply(404, response);
+        mockAdapter.onGet(HOST + '/api/v1/visit/group/area').reply(404, response);
 
         Area = require('components/Area/Area').default;
 
@@ -46,7 +45,7 @@ describe('Test Area', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/visit/group/area').reply(404, {});
+        mockAdapter.onGet(HOST + '/api/v1/visit/group/area').reply(404, {});
 
         Area = require('components/Area/Area').default;
 
@@ -67,7 +66,7 @@ describe('Test Area', () => {
         let component;
         let mockAdapter = new MockAdapter(axios);
 
-        mockAdapter.onGet('http://localhost:3000/api/v1/visit/group/area').reply(200, response);
+        mockAdapter.onGet(HOST + '/api/v1/visit/group/area').reply(200, response);
 
         Area = require('components/Area/Area').default;
 

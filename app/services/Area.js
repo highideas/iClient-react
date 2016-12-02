@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const Visit = {
+const Area = {
 
     getEntryPoint() {
-        return [ HOST, 'api', 'v1', 'visit' ];
+        return [ HOST, 'api', 'v1', 'area' ];
     },
 
     getConfig() {
@@ -14,10 +14,8 @@ const Visit = {
         };
     },
 
-    getGroupByArea() {
-        let url = this.getEntryPoint();
-        url.push('group', 'area');
-        return axios.get(url.join('/'), this.getConfig());
+    getAll() {
+        return axios.get(this.getEntryPoint().join('/'), this.getConfig());
     },
 
     save(data) {
@@ -25,5 +23,6 @@ const Visit = {
     }
 };
 
-export default Visit;
+export default Area;
+
 
