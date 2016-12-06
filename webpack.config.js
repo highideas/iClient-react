@@ -32,7 +32,10 @@ module.exports = {
             compress: { warnings: false }
         }),
         new webpack.DefinePlugin({
-            HOST: JSON.stringify(process.env.HOST || 'http://localhost:3000')
+            HOST: JSON.stringify(process.env.HOST || 'http://localhost:3000'),
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
         })
     ],
     resolve: {
