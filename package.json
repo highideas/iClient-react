@@ -6,12 +6,13 @@
   "dependencies": {
     "axios": "^0.14.0",
     "bulma": "^0.2.1",
-    "font-awesome": "^4.6.3",
+    "font-awesome": "^4.7.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-router": "^2.8.1"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.7.1",
     "babel-core": "^6.17.0",
     "babel-jest": "^16.0.0",
     "babel-loader": "^6.2.5",
@@ -45,7 +46,14 @@
     "modulePaths": [
       "app"
     ],
-    "collectCoverage": true
+    "collectCoverage": true,
+    "globals" : {
+        "HOST" : "http://localhost:3000"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/tests/__mocks__/styleMock.js"
+    }
   },
   "author": "",
   "license": "ISC"

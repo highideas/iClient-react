@@ -27,7 +27,7 @@ class Area extends React.Component
                 areas: this.generate(response.data.visits)
             });
         }).catch((error) => {
-            if (error.response) {
+            if (typeof error.response.data.error !== 'undefined') {
                 this.setState({error: error.response.data.error});
             }
         });
@@ -57,6 +57,19 @@ class Area extends React.Component
         }
         return (
             <div className="container hello">
+                <div className="level header">
+                    <div className="level-left">
+                        <h2 className="title is-2">iClient</h2>
+                    </div>
+                    <div className="level-right">
+                        <Link to='/area' className="button is-info is-medium">
+                            <span className="icon">
+                                <i className="fa fa-plus"></i>
+                            </span>
+                            <span>New Area</span>
+                        </Link>
+                    </div>
+                </div>
                 { this.state.areas }
             </div>
         );

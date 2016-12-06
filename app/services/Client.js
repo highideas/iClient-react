@@ -1,15 +1,38 @@
 import axios from 'axios';
 
-import { HOST } from 'constants/Server';
-
 const Client = {
-    getClients() {
-        let config = {
+
+    getEntryPoint() {
+        return [ HOST, 'api', 'v1', 'client' ];
+    },
+
+    getConfig() {
+        return {
             headers: {
-                Authorization : localStorage.token
+                Authorization : window.localStorage.getItem('token')
             }
         };
-        return axios.get(`${HOST}/api/v1/client`, config);
+    },
+
+    getClients() {
+        return axios.get(this.getEntryPoint().join('/'), this.getConfig());
+    },
+
+    find(id) {
+
+        let url = this.getEntryPoint();
+        url.push(id);
+
+        return axios.get(url.join('/'), this.getConfig());
+    },
+
+    save(client, id = undefined) {
+        if (id !== undefined) {
+            let url = this.getEntryPoint();
+            url.push(id);
+            return axios.put(url.join('/'), client, this.getConfig());
+        }
+        return axios.post(this.getEntryPoint().join('/'), client, this.getConfig());
     }
 };
 
