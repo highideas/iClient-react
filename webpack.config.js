@@ -55,6 +55,11 @@ var resolve = {
 };
 
 module.exports = {
+    externals: {
+        'react': 'React',
+        'react-router': 'ReactRouter',
+        'react-dom': 'ReactDOM'
+    },
     entry: "./app/App.js",
     output: {
         path: 'public/dist/',
