@@ -36,7 +36,7 @@ self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.open(CACHE_NAME).then(function(cache) {
             return cache.match(event.request).then(function(response) {
-                if (response) {
+                if (response && !navigator.onLine) {
                     return response;
                 }
                 return fetch(event.request).then(function(response) {
