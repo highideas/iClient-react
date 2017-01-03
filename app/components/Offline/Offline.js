@@ -19,7 +19,7 @@ class Offline extends React.Component
     }
 
     updateNetworkStatus() {
-        if (navigator.onLine) {
+        if (window.navigator.onLine) {
             this.setState({networkStatus: {display : 'none'}});
         } else {
             this.setState({networkStatus: {display : ''}});
