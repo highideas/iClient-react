@@ -33,7 +33,7 @@
     "react-test-renderer": "^15.3.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2"
+    "webpack": "^2.1.0-beta.27"
   },
   "scripts": {
     "test": "jest",
@@ -47,8 +47,8 @@
       "app"
     ],
     "collectCoverage": true,
-    "globals" : {
-        "HOST" : "http://localhost:3000"
+    "globals": {
+      "HOST": "http://localhost:3000"
     },
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",

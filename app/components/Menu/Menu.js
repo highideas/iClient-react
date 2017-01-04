@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router'
 
-import Nav from 'components/Nav/Nav'
+import NavMenu from 'components/NavMenu/NavMenu'
 import LinksApp from 'components/LinksApp/LinksApp'
 
 
@@ -26,14 +26,14 @@ class Menu extends React.Component{
 
     handleView() {
         return (
-            <Nav>
+            <NavMenu>
                 <LinksApp
                     links={this.state.links}
                 />
                 <span className="nav-item">
                     <a className="button" onClick={this.handleLogout}>Logout</a>
                 </span>
-            </Nav>
+            </NavMenu>
         );
     }
 

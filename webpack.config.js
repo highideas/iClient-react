@@ -2,7 +2,64 @@ const path = require('path');
 
 var webpack = require('webpack');
 
+var bulmaLoader = {
+    test: /\.css$/,
+    loader: "style-loader!css-loader"
+};
+
+var fontAwesomeLoader = {
+    test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: "file-loader"
+};
+
+var fontAwesomeWoffLoader = {
+    test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: "url-loader",
+    query: {
+        limit: '10000',
+        minetype: 'application/font-woff'
+    }
+};
+
+var jsxLoader = {
+    test: /\.js$/,
+    exclude: /node_modules/,
+    loader: 'babel-loader',
+    query: {
+        presets: ['react', ['es2015', {'modules' : false}]]
+    }
+};
+
+var loaderOptionsPlugin = new webpack.LoaderOptionsPlugin({
+    minimize: true,
+    debug: false
+});
+
+var uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
+    compress: { warnings: false }
+});
+
+var definePlugin = new webpack.DefinePlugin({
+    HOST: JSON.stringify(process.env.HOST || 'http://localhost:3000'),
+    'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+    }
+});
+
+var resolve = {
+    extensions: ['*', '.js', '.jsx'],
+    modules: [
+        path.resolve('./app'),
+        'node_modules'
+    ]
+};
+
 module.exports = {
+    externals: {
+        'react': 'React',
+        'react-router': 'ReactRouter',
+        'react-dom': 'ReactDOM'
+    },
     entry: "./app/App.js",
     output: {
         path: 'public/dist/',
@@ -10,35 +67,17 @@ module.exports = {
         filename: "bundle.min.js",
     },
     module: {
-        loaders: [
-            //Bulma loader
-            { test: /\.css$/, loader: "style-loader!css-loader" },
-            //Font-awesome loader
-            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
-            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
-            //Jsx loader
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel',
-                query: {
-                    presets: ['react', 'es2015']
-                }
-            }
+        rules: [
+            bulmaLoader,
+            fontAwesomeWoffLoader,
+            fontAwesomeLoader,
+            jsxLoader
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false }
-        }),
-        new webpack.DefinePlugin({
-            HOST: JSON.stringify(process.env.HOST || 'http://localhost:3000')
-        })
+        loaderOptionsPlugin,
+        uglifyJsPlugin,
+        definePlugin
     ],
-    resolve: {
-        extensions: ['', '.js', '.jsx'],
-        root: [
-            path.resolve('./app')
-        ]
-    }
+    resolve: resolve
 }
