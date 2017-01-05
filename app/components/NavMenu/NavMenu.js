@@ -1,6 +1,8 @@
 import React from 'react';
 
-class Nav extends React.Component
+import Offline from 'components/Offline/Offline'
+
+class NavMenu extends React.Component
 {
     constructor(props, context) {
         super(props, context);
@@ -33,6 +35,11 @@ class Nav extends React.Component
                     <div className="nav-left">
                         <a className="nav-item" href="../index.html">IClient</a>
                     </div>
+                    <span className="nav-center nav-menu is-active">
+                        <span className="nav-item">
+                            <Offline />
+                        </span>
+                    </span>
                     <span className={ `nav-toggle ${this.state.toggleNavStatus}` } onClick={this.toggleNavStatus}>
                         <span></span>
                         <span></span>
@@ -47,9 +54,9 @@ class Nav extends React.Component
     }
 }
 
-Nav.childContextTypes = {
+NavMenu.childContextTypes = {
     onClick: React.PropTypes.func
 };
 
-export default Nav;
+export default NavMenu;
 
