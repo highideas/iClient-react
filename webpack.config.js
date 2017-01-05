@@ -63,7 +63,7 @@ module.exports = {
     entry: "./app/App.js",
     output: {
         path: 'public/dist/',
-        publicPath: '/dist/',
+        publicPath: 'dist/',
         filename: "bundle.min.js",
     },
     module: {

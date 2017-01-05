@@ -1,9 +1,9 @@
 var CACHE_NAME = 'v1::iClient';
 var urlsToCache = [
     '/',
-    '/index.html',
-    '/dist/bundle.min.js',
-    '/favicons/favicon-16x16.png',
+    'index.html',
+    'dist/bundle.min.js',
+    'favicons/favicon-16x16.png',
     'https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-with-addons.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/react-router/2.8.1/ReactRouter.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js',
