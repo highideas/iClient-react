@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import 'bulma/css/bulma.css'
-import 'font-awesome-webpack'
+import 'style-loader!css-loader!less-loader!font-awesome-webpack/font-awesome-styles.loader!font-awesome-webpack/font-awesome.config.js';
 
 import iClientComponent from 'components/IClient/IClient'
 import HomeComponent from 'components/Home/Home'
