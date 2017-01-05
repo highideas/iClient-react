@@ -1,15 +1,15 @@
 
-describe('Test Nav', () => {
+describe('Test NavMenu', () => {
     const React = require('react');
     const shallow = require('enzyme').shallow;
-    const Nav = require('components/Nav/Nav').default;
+    const NavMenu = require('components/NavMenu/NavMenu').default;
 
-    it('Nav should render child', (done) => {
+    it('NavMenu should render child', (done) => {
 
         let component = shallow(
-            <Nav>
+            <NavMenu>
                 <directive>Child</directive>
-            </Nav>
+            </NavMenu>
         );
 
         expect(component.find('directive').text()).toEqual('Child');
@@ -20,7 +20,7 @@ describe('Test Nav', () => {
     it('toggleNavStatus function should change toggleNavStatus state from is-active to empty', (done) => {
 
         let component = shallow(
-            <Nav />
+            <NavMenu />
         );
 
         component.instance().setState({ toggleNavStatus: 'is-active' });
@@ -34,7 +34,7 @@ describe('Test Nav', () => {
     it('toggleNavStatus function should change toggleNavStatus state from empty to is-active', (done) => {
 
         let component = shallow(
-            <Nav />
+            <NavMenu />
         );
 
         expect(component.state().toggleNavStatus).toEqual('');
@@ -47,7 +47,7 @@ describe('Test Nav', () => {
     it('hide should change toggleNavStatus state to empty', (done) => {
 
         let component = shallow(
-            <Nav />
+            <NavMenu />
         );
 
         component.instance().setState({ toggleNavStatus: 'whatever'} );

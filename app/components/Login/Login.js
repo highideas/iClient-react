@@ -4,6 +4,10 @@ import { Router } from 'react-router'
 import User from 'services/User';
 import ErrorComponent from 'components/Error/Error';
 
+const blackStyle = {
+    color : '#000'
+};
+
 class Login extends React.Component
 {
     constructor(props, context) {
@@ -40,15 +44,16 @@ class Login extends React.Component
                     <div className="container">
                         <div className="columns is-vcentered">
                             <div className="column is-4 is-offset-4">
-                                <h1 className="title has-text-centered">
+                                <p className="title has-text-centered" style={blackStyle}>
                                     IClient
-                                </h1>
+                                </p>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="box">
                                          <ErrorComponent error={this.state.error} />
-                                        <label className="label">Username</label>
+                                        <label className="label" htmlFor='username'>Username</label>
                                         <p className="control has-icon">
                                             <input
+                                                id='username'
                                                 ref='username'
                                                 className="input"
                                                 type="text"
@@ -56,9 +61,10 @@ class Login extends React.Component
                                             />
                                             <i className="fa fa-user" />
                                         </p>
-                                        <label className="label">Password</label>
+                                        <label className="label" htmlFor='password'>Password</label>
                                         <p className="control has-icon">
                                             <input
+                                                id='password'
                                                 ref='password'
                                                 className="input"
                                                 type="password"
@@ -68,7 +74,7 @@ class Login extends React.Component
                                         </p>
                                         <hr />
                                         <p className="control">
-                                            <button className="button is-primary">Login</button>
+                                            <button className="button is-primary" style={blackStyle}>Login</button>
                                         </p>
                                     </div>
                                 </form>
