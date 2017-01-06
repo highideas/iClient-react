@@ -21,6 +21,7 @@ describe('Test Menu', () => {
         let expectedLinks = [
             ['/', 'Home'],
             ['/clients', 'Clients'],
+            ['/lastVisits', 'Last Visits'],
             ['/areas', 'Areas'],
         ];
 
@@ -55,7 +56,7 @@ describe('Test Menu', () => {
         expect(window.localStorage.getItem('token')).toEqual('test_menu');
 
         expect(component.childAt(0).text()).toEqual('<LinksApp />');
-        expect(component.childAt(0).render().find('.nav-item.is-tab').length).toEqual(3);
+        expect(component.childAt(0).render().find('.nav-item.is-tab').length).toEqual(4);
         expect(component.childAt(1).text()).toEqual('Logout');
         done();
     });
