@@ -40,6 +40,7 @@ var uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
 });
 
 var definePlugin = new webpack.DefinePlugin({
+    jsonStubHeaders: JSON.stringify(process.env.jsonStubHeaders || ''),
     HOST: JSON.stringify(process.env.HOST || 'http://localhost:3000'),
     'process.env': {
         'NODE_ENV': JSON.stringify('production')
