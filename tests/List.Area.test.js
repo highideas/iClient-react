@@ -101,5 +101,35 @@ describe('Test Area', () => {
         }, 0);
     });
 
+    it('Should show headers to stub json', (done) => {
+        let response = {
+            areas: [
+                {_id: 'South', parent: 'Center', ancestors: 'Center'},
+                {_id: 'North', parent: 'Center', ancestors: 'Center'},
+            ]
+        };
+        let Area;
+        let component;
+        let mockAdapter = new MockAdapter(axios);
+        jsonStubHeaders = '{ "JsonStub-User-Key": "user-key", "JsonStub-Project-Key": "project-key" }';
+
+        mockAdapter.onGet(HOST + '/api/v1/area').reply(200, response);
+
+        Area = require('components/Area/List/Area').default;
+
+        component = shallow(
+            <Area />
+        );
+
+        setTimeout(() => {
+            try {
+                component.update();
+                expect(component.find('tbody td').at(0).text()).toEqual('South');
+                done();
+            } catch (e) {
+                console.log(e);
+            }
+        }, 0);
+    });
 });
 
