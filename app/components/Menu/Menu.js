@@ -14,6 +14,7 @@ class Menu extends React.Component{
             links: [
                 [ '/', 'Home'],
                 ['/clients', 'Clients'],
+                ['/lastVisits', 'Last Visits'],
                 ['/areas', 'Areas']
             ]
         };
