@@ -12,6 +12,7 @@ import ListClientComponent from 'components/Client/List/Client'
 import ProfileClientComponent from 'components/Client/Profile/Client'
 import SaveClientComponent from 'components/Client/Save/Client'
 import CreateVisitComponent from 'components/Visit/Create/Visit'
+import ShowVisitComponent from 'components/Visit/Show/Visit'
 import CreateAreaComponent from 'components/Area/Create/Area'
 
 ReactDOM.render(
@@ -25,7 +26,7 @@ ReactDOM.render(
             <Route path="areas" component={AreaComponent} />
             <Route path="area" component={CreateAreaComponent} />
             <Route path="visit/:clientId/" component={CreateVisitComponent} />
-            <Route path="visit/:id" component={AreaComponent} />
+            <Route path="visit/:id" component={ShowVisitComponent} />
             <Route path="lastVisits" component={LastVisitsComponent} />
         </Route>
     </Router>,
