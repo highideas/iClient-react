@@ -161,5 +161,36 @@ describe('Test Login', () => {
         }, 0);
     });
 
+    it('Should show headers to stub json', (done) => {
+
+        let Login = require('components/Login/Login').default;
+        let response = { error:"User Not Found" };
+        let mockAdapter = new MockAdapter(axios);
+        jsonStubHeaders = '{ "JsonStub-User-Key": "user-key", "JsonStub-Project-Key": "project-key" }';
+
+        mockAdapter.onPost(HOST + '/authenticate').reply(401, response);
+
+        let component = mount(
+            <Login />,
+            { context }
+        );
+
+        let inputLogin = component.find('form div p input[type="text"]');
+        let inputPassword = component.find('form div p input[type="password"]');
+
+        inputLogin.node.value = 'Astolfo';
+        inputLogin.simulate('change', inputLogin);
+
+        inputPassword.node.value = 'abcd';
+        inputPassword.simulate('change', inputPassword);
+
+        component.find('form').simulate('submit', { target: component.find('form').get(0) });
+
+        setTimeout(() => {
+            expect(component.state().error).toEqual('User Not Found');
+            done();
+        }, 0);
+    });
+
 });
 

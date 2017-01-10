@@ -89,5 +89,34 @@ describe('Test Client', () => {
         }, 0);
     });
 
+    it('Should show headers to stub json', (done) => {
+
+        let response = {
+            clients: [
+                {name: 'Jon Snow', address: '7 Street', city: 'Winterfell'},
+                {name: 'Cotter Pyke', address: '0 Street', city: 'Castle Black'},
+            ]
+        };
+        let Client;
+        let component;
+        let mockAdapter = new MockAdapter(axios);
+        jsonStubHeaders = '{ "JsonStub-User-Key": "user-key", "JsonStub-Project-Key": "project-key" }';
+
+        mockAdapter.onGet(HOST + '/api/v1/client').reply(200, response);
+
+        Client = require('components/Client/List/Client').default;
+
+        component = shallow(
+            <Client />
+        );
+
+        setTimeout(() => {
+            component.update();
+            expect(component.find('tbody td').at(0).text()).toEqual('Jon Snow');
+            expect(component.find('tbody td').at(1).text()).toEqual('7 Street - Winterfell');
+            done();
+        }, 0);
+    });
+
 });
 
