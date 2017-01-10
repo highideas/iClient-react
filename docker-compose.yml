@@ -4,6 +4,9 @@ services:
         image: node:6.7.0
         container_name: iClientReact
         restart: always
+        environment:
+         - HOST=${HOST_SERVER_ICLIENT}
+         - jsonStubHeaders=${jsonStubHeadersIClient}
         ports:
          - "8081:80"
         volumes:
