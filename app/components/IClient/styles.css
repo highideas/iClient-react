@@ -3,3 +3,17 @@
     background-color: #00d1b2;
     color: #333;
 }
+
+.withPadding {
+    padding-top: 30px;
+}
+
+.withoutPadding {
+    padding-top: 0px;
+}
+
+@media screen and (max-width: 768px) {
+    .body-primary {
+        padding-top: 30px;
+    }
+}
