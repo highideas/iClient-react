@@ -7,11 +7,17 @@ const Visit = {
     },
 
     getConfig() {
-        return {
+        let config = {
             headers: {
                 Authorization : window.localStorage.getItem('token')
-            }
+            },
+            data: {}
         };
+
+        if (jsonStubHeaders != undefined && jsonStubHeaders != '') {
+            Object.assign(config.headers, JSON.parse(jsonStubHeaders));
+        }
+        return config;
     },
 
     getGroupByArea() {
