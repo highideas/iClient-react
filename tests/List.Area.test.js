@@ -35,7 +35,7 @@ describe('Test Area', () => {
         setTimeout(() => {
             try {
                 component.update();
-                expect(component.render().text()).toEqual('Area Not Found');
+                expect(component.render().find('.is-danger').text()).toEqual('Area Not Found');
                 done();
             } catch (e) {
                 console.log(e);
@@ -62,7 +62,7 @@ describe('Test Area', () => {
         setTimeout(() => {
             try {
                 component.update();
-                expect(component.render().text()).toEqual('Error Found: Trying get area');
+                expect(component.render().find('.is-danger').text()).toEqual('Error Found: Trying get area');
                 done();
             } catch (e) {
                 console.log(e);
