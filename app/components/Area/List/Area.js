@@ -59,9 +59,9 @@ class Area extends React.Component
         return (
             <section className="">
                 <div className="container hello">
+                    { this.showError() }
                     <div className="level header">
                         <div className="level-left">
-                            { this.showError() }
                             <h2 className="title is-2">Areas</h2>
                         </div>
                         <div className="level-right">
