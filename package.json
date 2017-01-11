@@ -37,6 +37,7 @@
   },
   "scripts": {
     "test": "jest",
+    "build": "webpack",
     "webpack": "webpack -w",
     "serve": "http-server -o -c 1 -p 80",
     "dev": "npm-run-all --parallel webpack serve",
