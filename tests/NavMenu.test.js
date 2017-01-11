@@ -57,5 +57,40 @@ describe('Test NavMenu', () => {
 
         done();
     });
+
+    it('should show message of offline with mobile screen', (done) => {
+
+        window.screen.__defineGetter__('width', function(){
+            return 600;
+        });
+
+        let component = shallow(
+            <NavMenu />
+        );
+
+        component.instance().setState({ toggleNavStatus: 'whatever'} );
+        expect(component.state().toggleNavStatus).toEqual('whatever');
+        component.instance().hide(null);
+        expect(component.state().toggleNavStatus).toEqual('');
+
+        done();
+    });
+
+    it('should show message of offline with desktop screen', (done) => {
+
+        window.screen.__defineGetter__('width', function(){
+            return 900;
+        });
+
+        let component = shallow(
+            <NavMenu />
+        );
+        component.instance().setState({ toggleNavStatus: 'whatever'} );
+        expect(component.state().toggleNavStatus).toEqual('whatever');
+        component.instance().hide(null);
+        expect(component.state().toggleNavStatus).toEqual('');
+
+        done();
+    });
 });
 

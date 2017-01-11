@@ -89,4 +89,35 @@ describe('Test Area', () => {
         }, 0);
     });
 
+    it('Should show headers to stub json', (done) => {
+
+        let response = require('AreasResponseMock').default;
+        let Area;
+        let component;
+        let mockAdapter = new MockAdapter(axios);
+        jsonStubHeaders = '{ "JsonStub-User-Key": "user-key", "JsonStub-Project-Key": "project-key" }';
+
+        mockAdapter.onGet(HOST + '/api/v1/visit/group/area').reply(200, response);
+
+        Area = require('components/Area/Area').default;
+
+        component = shallow(
+            <Area />
+        );
+
+        setTimeout(() => {
+            expect(
+                shallow(
+                    component.state().areas[0]
+                ).find('.title').at(0).text()
+            ).toEqual('Center');
+            expect(
+                shallow(
+                    component.state().areas[1]
+                ).find('.title').at(0).text()
+            ).toEqual('South');
+            done();
+        }, 0);
+    });
+
 });
