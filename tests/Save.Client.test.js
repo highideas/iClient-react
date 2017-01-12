@@ -277,10 +277,14 @@ describe('Test Save Client', () => {
         );
 
         setTimeout(() => {
-
-            expect(component.find('select option').at(0).text()).toEqual('Center');
-            expect(component.find('select option').at(1).text()).toEqual('South');
-            done();
+            try {
+                expect(component.find('select option').at(0).text()).toEqual('Select One');
+                expect(component.find('select option').at(1).text()).toEqual('Center');
+                expect(component.find('select option').at(2).text()).toEqual('South');
+                done();
+            } catch (e) {
+                console.log(e);
+            }
         }, 0);
     });
 
