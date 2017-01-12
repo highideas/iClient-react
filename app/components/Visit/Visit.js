@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router'
+import DateHelper from 'helpers/Date'
 
 class Visit extends React.Component
 {
@@ -15,7 +16,7 @@ class Visit extends React.Component
         return this.state.visits.map((areaVisit, key) => (
             <tr key={ key } >
                 <td>{ areaVisit.visit.client.name }</td>
-                <td>{ areaVisit.visit.visit_date }</td>
+                <td>{ DateHelper.format(areaVisit.visit.visit_date) }</td>
                 <td className="is-icon">
                     <Link to={ `/visit/${areaVisit.visit._id}` } >
                         <i className="fa fa-info-circle" />

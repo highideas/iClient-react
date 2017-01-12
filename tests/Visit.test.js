@@ -53,11 +53,11 @@ describe('Test Visit', () => {
 
         expect(component.find('td').length).toEqual(6);
         expect(component.find('td').at(0).text()).toEqual('Jon Snow');
-        expect(component.find('td').at(1).text()).toEqual('2016-10-19T13:30:13.329Z');
+        expect(component.find('td').at(1).text()).toEqual('Wed, 19 Oct 2016 13:30:13 GMT');
         expect(component.find('td').at(2).text()).toEqual('<Link />');
 
         expect(component.find('td').at(3).text()).toEqual('Cotter Pyke');
-        expect(component.find('td').at(4).text()).toEqual('2016-10-18T13:31:14.430Z');
+        expect(component.find('td').at(4).text()).toEqual('Tue, 18 Oct 2016 13:31:14 GMT');
         expect(component.find('td').at(5).text()).toEqual('<Link />');
         done();
     });
