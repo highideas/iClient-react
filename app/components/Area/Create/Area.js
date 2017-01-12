@@ -21,9 +21,13 @@ class Area extends React.Component
         e.preventDefault();
 
         let form = e.target;
+        let parent = '';
+        if (form.querySelector('[name="parent"]')) {
+            parent = form.querySelector('[name="parent"]').value;
+        }
         let formData = {
             _id : this.refs.area.value,
-            parent: form.querySelector('[name="parent"]').value
+            parent: parent
         };
 
         this.setState({area: formData});

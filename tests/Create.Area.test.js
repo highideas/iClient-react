@@ -256,5 +256,50 @@ describe('Test Create Area', () => {
             }
         }, 0);
     });
+
+    it('Should return data on submit when first time using areas', (done) => {
+
+        let areaInput;
+        let areaSelected;
+        let Area = require('components/Area/Create/Area').default;
+        let mockAdapter = new MockAdapter(axios);
+        let component = mount(
+            <Area />,
+            { context }
+        );
+        let expected = {
+            _id : 'Test',
+            parent : '',
+        }
+
+        mockAdapter
+            .onGet(HOST + '/api/v1/area').reply(404, {error: "Not Found"})
+            .onPost(HOST + '/api/v1/area').reply(201)
+
+        setTimeout(() => {
+
+            try {
+
+                let inputs = {
+                    area : component.find('input'),
+                    parent : component.find('select'),
+                }
+
+                areaInput = component.find('input');
+                areaInput.node.value = 'Test';
+                areaInput.simulate('change', areaInput);
+
+                expect(component.find('.is-danger').text()).toEqual('Not Found');
+
+                component.find('form').simulate('submit', { target: component.find('form').get(0) });
+
+                expect(component.state().area).toEqual(expected);
+                expect(component.state().error).toEqual('');
+                done();
+            } catch (e) {
+                console.log(e);
+            }
+        }, 25);
+    });
 });
 
