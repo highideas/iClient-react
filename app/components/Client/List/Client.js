@@ -12,6 +12,8 @@ class Client extends React.Component
             clients : null,
             error : ''
         };
+        this.showError = this.showError.bind(this);
+        this.listClients = this.listClients.bind(this);
         this.getClients();
     }
 
@@ -26,14 +28,18 @@ class Client extends React.Component
         });
     }
 
-    render() {
+    showError() {
         if (this.state.error) {
             return (<Error error={this.state.error} />);
         }
-        if (!this.state.clients) {
-            return <div>Loading...</div>;
+        return '';
+    }
+
+    listClients() {
+        if (this.state.error) {
+            return '';
         }
-        const clientList = this.state.clients.map((client, key) => {
+        return this.state.clients.map((client, key) => {
             let line = ((key % 2) ? 'is-success' : 'is-info');
             return (
                 <tr key={key}>
@@ -58,10 +64,17 @@ class Client extends React.Component
                 </tr>
             );
         });
+    }
+
+    render() {
+        if (!this.state.clients && !this.state.error) {
+            return <div>Loading...</div>;
+        }
 
         return (
             <section className="">
                 <div className="container hello">
+                    { this.showError() }
                     <div className="level header">
                         <div className="level-left">
                             <h2 className="title is-2">iClient</h2>
@@ -77,7 +90,7 @@ class Client extends React.Component
                     </div>
                     <table className="table">
                         <tbody>
-                            { clientList }
+                            { this.listClients() }
                         </tbody>
                     </table>
                 </div>
