@@ -164,7 +164,9 @@ class Client extends React.Component
                                             name='area'
                                             value={ this.state.client.area }
                                             onChange={this.handleChange}
+                                            required="true"
                                         >
+                                            <option value="">Select One</option>
                                             {
                                                 this.state.areas.map((area, key) => (
                                                     <option value={ area._id } key={ key }>{ area._id}</option>
