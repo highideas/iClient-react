@@ -7,7 +7,7 @@ jest.dontMock('axios');
 jest.dontMock('axios-mock-adapter');
 jest.dontMock('enzyme');
 jest.dontMock('services/Visit');
-jest.dontMock('helpers/DateHelper');
+jest.dontMock('helpers/Date');
 
 describe('Test Visit', () => {
     require('../tests/__mocks__/LocalStorageMock');
@@ -57,7 +57,7 @@ describe('Test Visit', () => {
         setTimeout(() => {
 
             try {
-                expect(component.find('.name p').at(0).text()).toEqual('Visit Date: 10/01/2017');
+                expect(component.find('.name p').at(0).text()).toEqual('Visit Date: Sun, 01 Oct 2017 00:00:00 GMT');
                 expect(component.find('.name p').at(1).text()).toEqual('Address: 7 Street');
                 expect(component.find('.name p').at(2).text()).toEqual('Area: Center');
                 expect(component.find('.followers p').at(0).text()).toEqual('R$ 300');

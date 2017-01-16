@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import VisitService from 'services/Visit'
 import Error from 'components/Error/Error'
 import styles from 'components/Visit/Show/styles.css'
-import DateHelper from 'helpers/DateHelper'
+import DateHelper from 'helpers/Date'
 
 class Visit extends React.Component
 {
@@ -51,7 +51,7 @@ class Visit extends React.Component
                                     <strong>{this.state.visit.client.name}</strong>
                                 </h3>
                             <p className="tagline">
-                                <strong>Visit Date: </strong>{DateHelper.formateDate(this.state.visit.visit_date)}
+                                <strong>Visit Date: </strong>{DateHelper.format(this.state.visit.visit_date)}
                             </p>
                             <p className="tagline">
                                 <strong>Address: </strong>{this.state.visit.client.address}
