@@ -33,9 +33,13 @@ describe('Test Client', () => {
         );
 
         setTimeout(() => {
-            component.update();
-            expect(component.render().text()).toEqual('Client Not Found');
-            done();
+            try {
+                component.update();
+                expect(component.render().find('.is-danger').text()).toEqual('Client Not Found');
+                done();
+            } catch (e) {
+                console.log(e);
+            }
         }, 0);
     });
 
@@ -55,9 +59,13 @@ describe('Test Client', () => {
         );
 
         setTimeout(() => {
-            component.update();
-            expect(component.render().text()).toEqual('Error Found: Trying get client');
-            done();
+            try {
+                component.update();
+                expect(component.render().find('.is-danger').text()).toEqual('Error Found: Trying get client');
+                done();
+            } catch (e) {
+                console.log(e);
+            }
         }, 0);
     });
 

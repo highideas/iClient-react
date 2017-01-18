@@ -13,6 +13,8 @@ class Area extends React.Component
             areas : null,
             error : ''
         };
+        this.showError = this.showError.bind(this);
+        this.listAreas = this.listAreas.bind(this);
         this.getAreas();
     }
 
@@ -27,15 +29,11 @@ class Area extends React.Component
         });
     }
 
-    render() {
+    listAreas() {
         if (this.state.error) {
-            return (<Error error={this.state.error} />);
+            return '';
         }
-        if (!this.state.areas) {
-            return <div>Loading...</div>;
-        }
-        const areaList = this.state.areas.map((area, key) => {
-            let line = ((key % 2) ? 'is-success' : 'is-info');
+        return this.state.areas.map((area, key) => {
             return (
                 <tr key={key}>
                     <td>
@@ -44,10 +42,24 @@ class Area extends React.Component
                 </tr>
             );
         });
+    }
+
+    showError() {
+        if (this.state.error) {
+            return (<Error error={this.state.error} />);
+        }
+        return '';
+    }
+
+    render() {
+        if (!this.state.areas && !this.state.error) {
+            return <div>Loading...</div>;
+        }
 
         return (
             <section className="">
                 <div className="container hello">
+                    { this.showError() }
                     <div className="level header">
                         <div className="level-left">
                             <h2 className="title is-2">Areas</h2>
@@ -63,7 +75,7 @@ class Area extends React.Component
                     </div>
                     <table className="table">
                         <tbody>
-                            { areaList }
+                            { this.listAreas() }
                         </tbody>
                     </table>
                 </div>
