@@ -9,6 +9,8 @@ Simple client to IClient Server made in React JS
 
 docker-compose up -d
 
+docker-compose exec iClientReact npm install
+
 docker-compose exec iClientReact bash
 
 cd client/
