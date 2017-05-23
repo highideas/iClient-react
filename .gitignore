@@ -4,3 +4,5 @@ public/dist/**
 public/css/**
 jest/**
 coverage/**
+npm-debug.log
+
